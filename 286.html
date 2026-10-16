@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>高分子構造学 スペル入力特訓＆単語帳（全286語完全収録）</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .card-inner {
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .card-flipped {
+      transform: rotateY(180deg);
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-indigo-600 selection:text-white">
+
+  <!-- Header -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 py-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-rose-500 flex items-center justify-center font-bold text-lg shadow-inner shrink-0">
+            🧪
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white">高分子構造学 スペル入力特訓</h1>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40">
+                配点30%・1文字ミス1点減点対策
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 hidden sm:block">過去問6回分（R6・R4・H30・H27・H24・H23）＋スライド英語・記述枠 全286語完全収録</p>
+          </div>
+        </div>
+        <!-- Mobile stats pill -->
+        <div class="sm:hidden flex items-center gap-1.5 text-xs">
+          <span id="mobileStatBadge" class="px-2 py-1 rounded-lg bg-slate-800 text-slate-200 font-semibold">286語</span>
+        </div>
+      </div>
+
+      <!-- Mode Switch Tabs -->
+      <nav class="flex items-center bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 self-stretch sm:self-auto" aria-label="モード切替">
+        <button id="tabBtnSpell" type="button" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 bg-indigo-600 text-white shadow">
+          <span>⌨️</span>
+          <span>スペル特訓</span>
+        </button>
+        <button id="tabBtnCard" type="button" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 text-slate-300 hover:text-white">
+          <span>🃏</span>
+          <span>カード暗記</span>
+        </button>
+        <button id="tabBtnList" type="button" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 text-slate-300 hover:text-white">
+          <span>📋</span>
+          <span>単語一覧・管理</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Filter & Sort Bar -->
+  <section class="bg-white border-b border-slate-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-3 sm:px-6 py-3 flex flex-col gap-2.5">
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap items-center gap-1.5" role="group" aria-label="出題頻度フィルター">
+        <span class="text-xs font-bold text-slate-500 mr-1">絞り込み:</span>
+        <button type="button" data-filter="all" class="filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-900 text-white shadow-sm">
+          すべて <span id="countAll" class="ml-0.5 opacity-80">(286)</span>
+        </button>
+        <button type="button" data-filter="freq_6_5" class="filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-700 hover:bg-rose-50 hover:text-rose-700 border border-slate-200">
+          🔥6回・5回（最優先） <span id="count65" class="ml-0.5 opacity-75">(60)</span>
+        </button>
+        <button type="button" data-filter="freq_4_3" class="filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 border border-slate-200">
+          📌4回・3回（頻出） <span id="count43" class="ml-0.5 opacity-75">(61)</span>
+        </button>
+        <button type="button" data-filter="freq_2_1" class="filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 border border-slate-200">
+          🔸2回・1回 <span id="count21" class="ml-0.5 opacity-75">(129)</span>
+        </button>
+        <button type="button" data-filter="slide" class="filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-700 hover:bg-purple-50 hover:text-purple-700 border border-slate-200">
+          📘スライド英語・記述枠 <span id="countSlide" class="ml-0.5 opacity-75">(36)</span>
+        </button>
+        <button type="button" data-filter="mistakes" class="filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-100 text-rose-700 hover:bg-rose-100 border border-rose-200">
+          ❌間違えた問題だけ <span id="countMistakes" class="ml-0.5 font-extrabold">(0)</span>
+        </button>
+      </div>
+
+      <!-- Sort & Quick Options Row -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100">
+        <div class="flex flex-wrap items-center gap-2">
+          <label for="sortSelect" class="text-xs font-bold text-slate-500">並び順:</label>
+          <select id="sortSelect" class="text-xs font-semibold bg-slate-50 border border-slate-300 text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option value="freq">① 出題回数が多い順（6回→1回→スライド枠）【デフォルト】</option>
+            <option value="r6">② 最新テスト（R6）の出題順（R6#1〜#130優先）</option>
+            <option value="random">③ ランダム（シャッフル）</option>
+          </select>
+          <button id="reshuffleBtn" type="button" class="hidden text-xs font-bold px-2.5 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 transition-colors">
+            🔀 再シャッフル
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 text-xs">
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-slate-600 font-medium">
+            <input id="showExcludedCheckbox" type="checkbox" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+            <span>除外済み（覚えた単語 <strong id="excludedCountLabel" class="text-indigo-600">0</strong>語）も含める</span>
+          </label>
+          <div class="hidden sm:flex items-center gap-2 text-slate-500 border-l border-slate-200 pl-3">
+            <span>連続正解: <strong id="streakCount" class="text-indigo-600">0</strong></span>
+            <span>正答率: <strong id="accuracyRate" class="text-emerald-600">--%</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6">
+
+    <!-- Empty Filter State -->
+    <div id="emptyStateBox" class="hidden bg-white rounded-2xl border border-slate-200 p-8 text-center shadow-sm my-4">
+      <div class="text-4xl mb-3">🎉</div>
+      <h2 id="emptyStateTitle" class="text-lg font-bold text-slate-800 mb-1">条件に一致する単語がありません</h2>
+      <p id="emptyStateDesc" class="text-sm text-slate-500 mb-4">フィルター条件を変更するか、除外した単語を表示してください。</p>
+      <div class="flex flex-wrap justify-center gap-2">
+        <button id="resetFilterBtn" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition">
+          「すべて」の単語を表示
+        </button>
+        <button id="includeExcludedQuickBtn" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold hover:bg-slate-200 transition">
+          除外済み単語を含めて表示
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODE 1: スペル特訓モード (Default Main View) -->
+    <!-- ========================================== -->
+    <section id="viewSpell" class="space-y-4">
+      <!-- Progress & Navigation Header -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 shadow-sm flex flex-col gap-2.5">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button id="prevWordBtn" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition disabled:opacity-40">
+              ◀ 前へ
+            </button>
+            <span id="spellProgressText" class="text-sm font-extrabold text-slate-800">1 / 286 問</span>
+            <button id="nextWordBtn" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition disabled:opacity-40">
+              次へ ▶
+            </button>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <button id="toggleMistakeCurrentBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border transition flex items-center gap-1 bg-slate-50 text-slate-600 border-slate-200 hover:bg-rose-50">
+              <span id="mistakeCurrentIcon">☆</span>
+              <span class="hidden sm:inline">苦手登録</span>
+            </button>
+            <button id="toggleExcludeCurrentBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border transition flex items-center gap-1 bg-slate-50 text-slate-600 border-slate-200 hover:bg-emerald-50">
+              <span>✓</span>
+              <span id="excludeCurrentText">覚えた（除外）</span>
+            </button>
+          </div>
+        </div>
+        <!-- Progress bar -->
+        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+          <div id="spellProgressBar" class="h-full bg-gradient-to-r from-indigo-500 to-rose-500 transition-all duration-300" style="width: 1%"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm space-y-5">
+        <!-- Badges: Frequency & Exam History -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="spellWordIdBadge" class="text-xs font-mono-code font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">No.1</span>
+            <span id="spellFreqBadge" class="text-xs font-extrabold px-2.5 py-1 rounded-full">🔥 6回すべて出題</span>
+            <span id="spellMultiAnswerBadge" class="hidden text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+              別解あり（どれでも正解）
+            </span>
+          </div>
+          <div id="spellHistoryContainer" class="flex flex-wrap items-center gap-1"></div>
+        </div>
+
+        <!-- Japanese Prompt -->
+        <div class="py-2 sm:py-4 text-center space-y-2">
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">日本語のお題に対応する英語スペルを入力</p>
+          <h2 id="spellJaPrompt" class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight break-words">
+            ポリエチレン
+          </h2>
+        </div>
+
+        <!-- Hint Box -->
+        <div class="flex flex-col items-center gap-2">
+          <div class="flex flex-wrap items-center justify-center gap-2">
+            <button id="hintBtn" type="button" class="px-3.5 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+              <span>💡</span>
+              <span id="hintBtnLabel">頭文字と文字数を見る (ヒント1)</span>
+            </button>
+            <button id="speakCurrentBtn" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1">
+              <span>🔊</span>
+              <span>発音を聞く (en-US)</span>
+            </button>
+          </div>
+          <div id="hintDisplayBox" class="hidden w-full max-w-xl bg-amber-50/70 border border-amber-200 rounded-xl px-4 py-2.5 text-center">
+            <p class="text-[11px] font-bold text-amber-700 mb-0.5" id="hintStageTitle">ヒント Lv.1（頭文字と文字数）</p>
+            <p id="hintTextContent" class="font-mono-code text-base sm:text-lg font-bold text-slate-800 tracking-wider break-all"></p>
+          </div>
+        </div>
+
+        <!-- Spelling Input Area -->
+        <form id="spellForm" class="max-w-xl mx-auto space-y-3" autocomplete="off">
+          <div class="relative">
+            <input
+              id="spellInput"
+              type="text"
+              placeholder="ここに英単語をタイピング... (Enterで判定)"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              class="w-full px-4 py-3.5 sm:py-4 text-lg sm:text-xl font-mono-code font-semibold bg-slate-50 border-2 border-slate-300 rounded-xl focus:outline-none focus:border-indigo-600 focus:bg-white transition pr-24"
+            />
+            <button
+              id="submitSpellBtn"
+              type="submit"
+              class="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold shadow transition"
+            >
+              判定 ↵
+            </button>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 px-1">
+            <span>※ `Enter` キーで即座に正誤判定 / 判定後もう一度 `Enter` で次の問題へ</span>
+            <button id="giveUpBtn" type="button" class="text-slate-500 hover:text-rose-600 font-semibold underline">
+              わからない（答えを見る）
+            </button>
+          </div>
+        </form>
+
+        <!-- Result & Character-by-Character Diff Feedback Box -->
+        <div id="spellFeedbackBox" class="hidden rounded-2xl border-2 p-4 sm:p-5 space-y-4 transition-all">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+              <span id="feedbackIcon" class="text-2xl sm:text-3xl">⭕</span>
+              <div>
+                <h3 id="feedbackTitle" class="text-base sm:text-lg font-extrabold">正解！完璧なスペルです</h3>
+                <p id="feedbackSubtitle" class="text-xs font-semibold opacity-85"></p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="feedbackSpeakBtn" type="button" class="px-3 py-1.5 rounded-xl bg-white/90 hover:bg-white text-slate-800 border border-slate-300 text-xs font-bold shadow-sm flex items-center gap-1">
+                <span>🔊</span>
+                <span>発音確認</span>
+              </button>
+              <button id="feedbackNextBtn" type="button" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold shadow flex items-center gap-1">
+                <span>次の問題へ (Enter)</span>
+                <span>▶</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Correct Answer & Alternative Answers Display -->
+          <div class="bg-white/90 rounded-xl p-3.5 border border-slate-200/80 space-y-2">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <span class="text-xs font-bold text-slate-500">正解スペル:</span>
+              <span id="feedbackCharCountInfo" class="text-[11px] font-mono-code text-slate-500"></span>
+            </div>
+            <div id="feedbackAnswersList" class="flex flex-wrap items-center gap-2"></div>
+          </div>
+
+          <!-- Character-level Diff Comparison (Shown on Mistake) -->
+          <div id="diffComparisonSection" class="hidden bg-white rounded-xl p-3.5 border border-rose-200 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-extrabold text-rose-700 flex items-center gap-1">
+                <span>🔍 スペルミス徹底比較（1文字ミス＝1点減点対策）</span>
+              </span>
+              <span id="deductionBadge" class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300">
+                ミス1箇所（-1点減点相当）
+              </span>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              <div>
+                <div class="text-slate-500 font-bold mb-1">あなたの入力:</div>
+                <div id="diffUserRow" class="flex flex-wrap gap-1 font-mono-code text-sm sm:text-base p-2 rounded-lg bg-slate-50 border border-slate-200 overflow-x-auto"></div>
+              </div>
+              <div>
+                <div class="text-slate-500 font-bold mb-1">最も近い正解スペル (<span id="diffTargetLabel" class="font-mono-code text-slate-700"></span>):</div>
+                <div id="diffTargetRow" class="flex flex-wrap gap-1 font-mono-code text-sm sm:text-base p-2 rounded-lg bg-emerald-50/50 border border-emerald-200 overflow-x-auto"></div>
+              </div>
+              <div class="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 pt-1">
+                <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-100 border border-emerald-400 inline-block"></span> 一致</span>
+                <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded bg-rose-200 border border-rose-500 inline-block"></span> 文字違い・余分</span>
+                <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-200 border border-amber-500 inline-block"></span> 文字抜け（不足）</span>
+              </div>
+            </div>
+
+            <!-- Immediate Retry Practice Input -->
+            <div class="pt-2 border-t border-slate-100">
+              <label for="retryPracticeInput" class="block text-xs font-bold text-slate-600 mb-1">
+                ✍️ 正しいスペルをその場で1回タイピングして指に覚えさせよう:
+              </label>
+              <div class="flex items-center gap-2">
+                <input
+                  id="retryPracticeInput"
+                  type="text"
+                  placeholder="正解のスペルをここに入力して練習..."
+                  autocomplete="off"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  spellcheck="false"
+                  class="flex-1 px-3 py-2 text-sm font-mono-code font-semibold bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                />
+                <span id="retryMatchStatus" class="text-xs font-bold text-slate-400 shrink-0">未一致</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODE 2: カード暗記モード (Flashcard Mode)  -->
+    <!-- ========================================== -->
+    <section id="viewCard" class="hidden space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200 p-3.5 sm:p-4 shadow-sm flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <button id="cardPrevBtn" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+            ◀ 前へ
+          </button>
+          <span id="cardProgressText" class="text-sm font-extrabold text-slate-800">1 / 286 枚</span>
+          <button id="cardNextBtn" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+            次へ ▶
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3 text-xs">
+          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none font-semibold text-slate-600">
+            <input id="autoSpeakCardCheckbox" type="checkbox" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+            <span>めくった時に自動発音🔊</span>
+          </label>
+          <button id="cardSpeakBtn" type="button" class="px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold transition">
+            🔊 発音
+          </button>
+        </div>
+      </div>
+
+      <!-- 3D Flip Card Area -->
+      <div class="perspective-1000 max-w-2xl mx-auto">
+        <div
+          id="flashcardContainer"
+          tabindex="0"
+          role="button"
+          aria-label="カードをタップして裏返す"
+          class="card-inner relative w-full min-h-[290px] sm:min-h-[330px] cursor-pointer select-none rounded-2xl shadow-md"
+        >
+          <!-- Card Front (Japanese) -->
+          <div class="backface-hidden absolute inset-0 bg-white rounded-2xl border-2 border-slate-200 p-5 sm:p-8 flex flex-col justify-between">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span id="cardWordIdBadge" class="text-xs font-mono-code font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">No.1</span>
+                <span id="cardFreqBadge" class="text-xs font-extrabold px-2.5 py-1 rounded-full">🔥 6回出題</span>
+              </div>
+              <div id="cardHistoryContainer" class="flex flex-wrap gap-1"></div>
+            </div>
+
+            <div class="my-auto text-center py-6 space-y-2">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">おもて（日本語）</span>
+              <h2 id="cardJaText" class="text-2xl sm:text-4xl font-extrabold text-slate-900 break-words">ポリエチレン</h2>
+              <p id="cardHintPreview" class="text-xs font-mono-code text-slate-400 pt-2"></p>
+            </div>
+
+            <div class="text-center text-xs font-semibold text-indigo-600 bg-indigo-50/80 py-2 rounded-xl">
+              👆 タップまたは Space キーで英語スペルを確認
+            </div>
+          </div>
+
+          <!-- Card Back (English) -->
+          <div class="backface-hidden rotate-y-180 absolute inset-0 bg-slate-900 text-white rounded-2xl border-2 border-indigo-500 p-5 sm:p-8 flex flex-col justify-between">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span id="cardBackJaSmall" class="text-xs font-bold text-slate-300">ポリエチレン</span>
+              <span id="cardBackCharInfo" class="text-xs font-mono-code text-indigo-300 bg-indigo-950/80 px-2.5 py-0.5 rounded-full border border-indigo-700">12文字</span>
+            </div>
+
+            <div class="my-auto text-center py-4 space-y-3">
+              <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">うら（英語スペル）</span>
+              <div id="cardEnMain" class="text-2xl sm:text-4xl font-mono-code font-extrabold text-white tracking-wide break-words">
+                polyethylene
+              </div>
+              <div id="cardEnSubList" class="text-sm font-mono-code text-amber-300 space-y-1"></div>
+            </div>
+
+            <div class="text-center text-xs font-semibold text-slate-400 bg-slate-800/90 py-2 rounded-xl">
+              👆 タップで日本語面に戻る / 下のボタンで仕分け
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flashcard Action Buttons -->
+      <div class="max-w-2xl mx-auto grid grid-cols-3 gap-2.5 pt-1">
+        <button id="cardMarkMistakeBtn" type="button" class="py-3 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs sm:text-sm transition flex flex-col sm:flex-row items-center justify-center gap-1 shadow-sm">
+          <span>❌ まだ不安</span>
+          <span class="text-[11px] opacity-75">(苦手登録して次へ)</span>
+        </button>
+        <button id="cardMarkOkBtn" type="button" class="py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm transition flex flex-col sm:flex-row items-center justify-center gap-1 shadow-sm">
+          <span>⭕ バッチリ</span>
+          <span class="text-[11px] opacity-85">(次へ進む)</span>
+        </button>
+        <button id="cardExcludeBtn" type="button" class="py-3 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold text-xs sm:text-sm transition flex flex-col sm:flex-row items-center justify-center gap-1 shadow-sm">
+          <span>🗑️ 除外する</span>
+          <span class="text-[11px] opacity-75">(完全習得済み)</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- MODE 3: 単語一覧・管理モード (List & Admin) -->
+    <!-- ========================================== -->
+    <section id="viewList" class="hidden space-y-4">
+      <!-- Search, Add Word & Reset Controls -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+          <!-- Search input -->
+          <div class="relative flex-1">
+            <input
+              id="listSearchInput"
+              type="text"
+              placeholder="🔍 日本語・英語スペル・出題番号（例: R6#1, copolymer, 融点）で検索..."
+              class="w-full pl-3.5 pr-9 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
+            />
+            <button id="clearSearchBtn" type="button" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold">
+              ✕
+            </button>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="toggleRedSheetBtn" type="button" class="px-3 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold transition flex items-center gap-1">
+              <span>🟥</span>
+              <span id="redSheetBtnText">英語を隠す（赤シート）: OFF</span>
+            </button>
+            <button id="openAddModalBtn" type="button" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-1 shadow-sm">
+              <span>＋</span>
+              <span>単語を追加</span>
+            </button>
+            <button id="openResetModalBtn" type="button" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-xs font-bold transition flex items-center gap-1">
+              <span>🔄</span>
+              <span>初期リセット</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500 pt-1 border-t border-slate-100">
+          <div>
+            表示件数: <strong id="listShowingCount" class="text-slate-800">286</strong> 語
+            （全収録 <strong id="listTotalCount">286</strong> 語 / 除外済み <strong id="listExcludedCount">0</strong> 語 / 苦手 <strong id="listMistakeCount">0</strong> 語）
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="restoreAllExcludedBtn" type="button" class="text-indigo-600 hover:underline font-semibold">
+              除外済み単語をすべて復元
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Word Table / Cards List -->
+      <div id="wordListContainer" class="space-y-2"></div>
+    </section>
+
+  </main>
+
+  <!-- Add Word Modal -->
+  <div id="addWordModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-extrabold text-slate-900">＋ 新しい単語を追加</h3>
+        <button id="closeAddModalBtn" type="button" class="text-slate-400 hover:text-slate-600 font-bold text-sm">✕</button>
+      </div>
+      <form id="addWordForm" class="space-y-3">
+        <div>
+          <label for="newWordJa" class="block text-xs font-bold text-slate-700 mb-1">日本語（お題）*</label>
+          <input id="newWordJa" type="text" required placeholder="例: 固有粘度" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div>
+          <label for="newWordEn" class="block text-xs font-bold text-slate-700 mb-1">英語スペル（複数ある場合は ` / ` 区切り）*</label>
+          <input id="newWordEn" type="text" required placeholder="例: intrinsic viscosity" class="w-full px-3 py-2 text-sm font-mono-code border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label for="newWordFreq" class="block text-xs font-bold text-slate-700 mb-1">出題区分</label>
+            <select id="newWordFreq" class="w-full px-2.5 py-2 text-xs font-semibold border border-slate-300 rounded-xl">
+              <option value="0">📘 スライド英語・記述枠</option>
+              <option value="6">🔥 6回出題</option>
+              <option value="5">⭐ 5回出題</option>
+              <option value="4">📌 4回出題</option>
+              <option value="3">🔹 3回出題</option>
+              <option value="2">🔸 2回出題</option>
+              <option value="1">▫️ 1回出題</option>
+            </select>
+          </div>
+          <div>
+            <label for="newWordHistory" class="block text-xs font-bold text-slate-700 mb-1">出題履歴・メモ</label>
+            <input id="newWordHistory" type="text" placeholder="例: スライド追加・自作" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl" />
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button id="cancelAddModalBtn" type="button" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">キャンセル</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow">追加して保存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div id="resetModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-extrabold text-slate-900">🔄 データの初期化・リセット</h3>
+        <button id="closeResetModalBtn" type="button" class="text-slate-400 hover:text-slate-600 font-bold text-sm">✕</button>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+        どのデータをリセットしますか？初期収録の全286語データはいつでも元通りに戻せます。
+      </p>
+      <div class="space-y-2">
+        <button id="resetExcludedOnlyBtn" type="button" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold text-left flex items-center justify-between">
+          <span>↩️ 「除外（覚えた）」した単語だけすべて元に戻す</span>
+          <span class="text-slate-400">→</span>
+        </button>
+        <button id="resetMistakesOnlyBtn" type="button" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold text-left flex items-center justify-between">
+          <span>🧹 「❌間違えた問題（苦手履歴）」だけクリアする</span>
+          <span class="text-slate-400">→</span>
+        </button>
+        <button id="resetAllStorageBtn" type="button" class="w-full py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold text-left flex items-center justify-between shadow">
+          <span>⚠️ すべて初期状態に戻す（追加・削除・履歴を完全初期化）</span>
+          <span>→</span>
+        </button>
+      </div>
+      <div class="flex justify-end pt-1">
+        <button id="cancelResetModalBtn" type="button" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">閉じる</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastBox" class="fixed bottom-4 right-4 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-2">
+    <div id="toastMessage" class="bg-slate-900 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg border border-slate-700"></div>
+  </div>
+
+  <script>
+    // ====================================================
+    // 1. 初期収録データ（全286語：1語も省略なし）
+    // ====================================================
+    const INITIAL_WORDS = [{"id":1,"ja":"ポリエチレン","en":"polyethylene","freq":6,"history":"R6#1, R4#27, H30#1, H27#1, H24#3, H23#3","r6":1},{"id":2,"ja":"ポリプロピレン","en":"polypropylene","freq":6,"history":"R6#2, R4#28, H30#2, H27#2, H24#14, H23#14","r6":2},{"id":3,"ja":"ポリ塩化ビニル","en":"polyvinyl chloride","freq":6,"history":"R6#3, R4#32, H30#3, H27#3, H24#13, H23#13","r6":3},{"id":4,"ja":"ポリスチレン","en":"polystyrene","freq":6,"history":"R6#4, R4#35, H30#4, H27#4, H24#56, H23#56","r6":4},{"id":5,"ja":"ポリイソプレン","en":"polyisoprene","freq":6,"history":"R6#5, R4#31, H30#5, H27#5, H24#44, H23#44","r6":5},{"id":6,"ja":"ポリエチレンテレフタラート（レート）","en":"polyethylene terephthalate","freq":6,"history":"R6#6, R4#36, H30#6, H27#6, H24#104, H23#104","r6":6},{"id":7,"ja":"ポリアミド","en":"polyamide","freq":6,"history":"R6#8, R4#37, H30#8, H27#8, H24#103, H23#103","r6":8},{"id":8,"ja":"ポリメタクリル酸メチル","en":"polymethyl methacrylate","freq":6,"history":"R6#10, R4#34, H30#10, H27#10, H24#101, H23#101","r6":10},{"id":9,"ja":"グラフト共重合体","en":"graft copolymer","freq":6,"history":"R6#31, R4#90, H30#31, H27#63, H24#65, H23#65","r6":31},{"id":10,"ja":"非晶性の（非晶）","en":"amorphous","freq":6,"history":"R6#34, R4#129, H30#34, H27#21, H24#39, H23#39","r6":34},{"id":11,"ja":"結晶性の（結晶性高分子）","en":"crystalline / crystalline polymer","freq":6,"history":"R6#35, R4#44, H30#35, H27#22, H24#9, H23#1","r6":35},{"id":12,"ja":"融点","en":"melting point / melting temperature","freq":6,"history":"R6#37, R4#21, H30#37, H27#23, H24#37, H23#37","r6":37},{"id":13,"ja":"周期共重合体","en":"periodic copolymer","freq":6,"history":"R6#40, R4#91, H30#40, H27#29, H24#111, H23#42","r6":40},{"id":14,"ja":"繰り返し単位","en":"repeating unit","freq":6,"history":"R6#45, R4#12, H30#54, H27#41, H24#59, H23#59","r6":45},{"id":15,"ja":"溶媒","en":"solvent","freq":6,"history":"R6#47, R4#48, H30#47, H27#24, H24#49, H23#49","r6":47},{"id":16,"ja":"溶質","en":"solute","freq":6,"history":"R6#48, R4#47, H30#48, H27#35, H24#74, H23#74","r6":48},{"id":17,"ja":"濃度","en":"concentration","freq":6,"history":"R6#49, R4#56, H30#49, H27#9, H24#82, H23#82","r6":49},{"id":18,"ja":"一次構造","en":"primary structure","freq":6,"history":"R6#55, R4#60, H30#55, H27#36, H24#5, H23#5","r6":55},{"id":19,"ja":"二次構造","en":"secondary structure","freq":6,"history":"R6#56, R4#61, H30#56, H27#37, H24#6, H23#6","r6":56},{"id":20,"ja":"三次構造","en":"ternary structure / tertiary structure","freq":6,"history":"R6#57, R4#62, H30#57, H27#39, H24#11, H23#11","r6":57},{"id":21,"ja":"高次構造","en":"higher-order structure","freq":6,"history":"R6#58, R4#63, H30#58, H27#40, H24#7, H23#7","r6":58},{"id":22,"ja":"平面ジグザグ","en":"planar zig-zag","freq":6,"history":"R6#61, R4#121, H30#61, H27#43, H24#73, H23#73","r6":61},{"id":23,"ja":"統計的共重合体","en":"statistical copolymer","freq":6,"history":"R6#64, R4#86, H30#64, H27#46, H24#34, H23#34","r6":64},{"id":24,"ja":"頭 - 尾結合","en":"head-to-tail","freq":6,"history":"R6#65, R4#64, H30#65, H27#47, H24#66, H23#66","r6":65},{"id":25,"ja":"シス","en":"cis","freq":6,"history":"R6#68, R4#122, H30#87, H27#50, H24#57, H23#57","r6":68},{"id":26,"ja":"トランス","en":"trans","freq":6,"history":"R6#69, R4#123, H30#69, H27#51, H24#69, H23#69","r6":69},{"id":27,"ja":"幾何（幾何異性体）","en":"geometric / geometric isomer","freq":6,"history":"R6#70, R4#65, H30#70, H27#54, H24#78, H23#78","r6":70},{"id":28,"ja":"ポリブタジエン","en":"polybutadiene","freq":6,"history":"R6#72, R4#30, H30#73, H27#52, H24#28, H23#28","r6":72},{"id":29,"ja":"立体配置","en":"configuration","freq":6,"history":"R6#75, R4#66, H30#76, H27#56, H24#21, H23#21","r6":75},{"id":30,"ja":"立体配座","en":"conformation","freq":6,"history":"R6#76, R4#67, H30#77, H27#57, H24#35, H23#35","r6":76},{"id":31,"ja":"回転半径","en":"radius of gyration","freq":6,"history":"R6#81, R4#130, H30#82, H27#17, H24#76, H23#76","r6":81},{"id":32,"ja":"立体規則性","en":"stereoregularity / tacticity","freq":6,"history":"R6#84, R4#68, H30#85, H27#62, H24#31, H23#31","r6":84},{"id":33,"ja":"融液 / メルト / 融体","en":"melt","freq":6,"history":"R6#85, R4#25, H30#33, H27#12, H24#83, H23#83","r6":85},{"id":34,"ja":"イソタクト型（イソタクチック）","en":"isotactic","freq":6,"history":"R6#86, R4#78, H30#86, H27#79, H24#64, H23#64","r6":86},{"id":35,"ja":"シンジオタクト型（シンジオタクチック）","en":"syndiotactic","freq":6,"history":"R6#87, R4#79, H30#88, H27#80, H24#23, H23#23","r6":87},{"id":36,"ja":"アタクト型（アタクチック）","en":"atactic","freq":6,"history":"R6#88, R4#80, H30#89, H27#81, H24#17, H23#17","r6":88},{"id":37,"ja":"二連子","en":"diad / dyad","freq":6,"history":"R6#89, R4#71, H30#90, H27#76, H24#24, H23#24","r6":89},{"id":38,"ja":"三連子","en":"triad","freq":6,"history":"R6#90, R4#72, H30#91, H27#77, H24#106, H23#106","r6":90},{"id":39,"ja":"四連子","en":"tetrad","freq":6,"history":"R6#91, R4#73, H30#92, H27#78, H24#107, H23#107","r6":91},{"id":40,"ja":"核磁気共鳴","en":"nuclear magnetic resonance","freq":6,"history":"R6#92, R4#82, H30#93, H27#74, H24#105, H23#40","r6":92},{"id":41,"ja":"メソ","en":"meso","freq":6,"history":"R6#93, R4#69, H30#94, H27#69, H24#79, H23#79","r6":93},{"id":42,"ja":"ラセモ","en":"racemo","freq":6,"history":"R6#94, R4#70, H30#95, H27#75, H24#48, H23#48","r6":94},{"id":43,"ja":"二元共重合体","en":"binary copolymer","freq":6,"history":"R6#98, R4#83, H30#100, H27#68, H24#113, H23#113","r6":98},{"id":44,"ja":"三元共重合体","en":"ternary copolymer / terpolymer","freq":6,"history":"R6#99, R4#84, H30#101, H27#70, H24#114, H23#114","r6":99},{"id":45,"ja":"交互共重合体","en":"alternating copolymer","freq":6,"history":"R6#100, R4#88, H30#72, H27#66, H24#112, H23#112","r6":100},{"id":46,"ja":"ランダム共重合体","en":"random copolymer","freq":6,"history":"R6#101, R4#87, H30#98, H27#65, H24#52, H23#52","r6":101},{"id":47,"ja":"樹脂","en":"resin","freq":5,"history":"R6#18, R4#40, H30#32, H24#58, H23#58","r6":18},{"id":48,"ja":"熱可塑性の","en":"thermoplastic","freq":5,"history":"R6#19, R4#39, H30#30, H24#47, H23#47","r6":19},{"id":49,"ja":"解析","en":"analysis","freq":5,"history":"R6#25, R4#137, H27#72, H24#98, H23#98","r6":25},{"id":50,"ja":"特徴づけ（特性解析）","en":"characterization","freq":5,"history":"R6#39, R4#81, H30#60, H24#30, H23#30","r6":39},{"id":51,"ja":"エンタルピー","en":"enthalpy","freq":5,"history":"R6#43, R4#22, H30#43, H27#28, H24#15","r6":43},{"id":52,"ja":"粘性（粘度）","en":"viscosity","freq":5,"history":"R6#53, R4#98, H30#45, H24#16, H23#16","r6":53},{"id":53,"ja":"ランダムコイル","en":"random coil","freq":5,"history":"R6#59, R4#131, H30#59, H27#42, H24#19","r6":59},{"id":54,"ja":"異性体","en":"isomer","freq":5,"history":"R6#71, H30#71, H27#55, H24#77, H23#77","r6":71},{"id":55,"ja":"停止剤","en":"terminator","freq":5,"history":"R6#74, R4#5, H27#83, H24#68, H23#68","r6":74},{"id":56,"ja":"不斉炭素原子","en":"asymmetric carbon atom","freq":5,"history":"R6#83, H30#84, H27#61, H24#63, H23#63","r6":83},{"id":57,"ja":"ジブロック共重合体","en":"diblock copolymer","freq":5,"history":"R6#102, H30#99, H27#64, H24#116, H23#116","r6":102},{"id":58,"ja":"開始剤","en":"initiator","freq":5,"history":"R6#115, R4#4, H27#82, H24#62, H23#62","r6":115},{"id":59,"ja":"現象","en":"phenomenon","freq":5,"history":"R6#120, H30#75, H27#73, H24#72, H23#72","r6":120},{"id":60,"ja":"力学物性","en":"mechanical property","freq":5,"history":"R4#17, H30#13, H27#13, H24#22, H23#22","r6":null},{"id":61,"ja":"ポリビニルアルコール","en":"polyvinyl alcohol","freq":4,"history":"R6#9, R4#29, H30#9, H27#95","r6":9},{"id":62,"ja":"温度","en":"temperature","freq":4,"history":"R6#14, R4#20, H30#14, H27#14","r6":14},{"id":63,"ja":"ゴム状平坦領域","en":"rubbery plateau","freq":4,"history":"R6#15, R4#46, H30#26, H27#26","r6":15},{"id":64,"ja":"熱硬化性の","en":"thermosetting","freq":4,"history":"R6#17, R4#41, H30#12, H24#122","r6":17},{"id":65,"ja":"ガラス状態","en":"glassy state","freq":4,"history":"R6#23, R4#135, H30#23, H27#19","r6":23},{"id":66,"ja":"重量平均分子量","en":"weight-average molecular weight","freq":4,"history":"R6#29, R4#14, H30#29, H27#25","r6":29},{"id":67,"ja":"ミクロ相分離","en":"microphase separation","freq":4,"history":"R6#33, R4#134, H24#50, H23#50","r6":33},{"id":68,"ja":"重合","en":"polymerization","freq":4,"history":"R6#44, R4#2, H30#97, H24#8","r6":44},{"id":69,"ja":"溶液","en":"solution","freq":4,"history":"R6#46, R4#58, H24#45, H23#45","r6":46},{"id":70,"ja":"希薄溶液","en":"dilute solution","freq":4,"history":"R6#50, R4#52, H30#50, H27#30","r6":50},{"id":71,"ja":"準希薄溶液","en":"semi-dilute solution","freq":4,"history":"R6#51, R4#53, H30#51, H27#33","r6":51},{"id":72,"ja":"濃厚溶液","en":"concentrated solution","freq":4,"history":"R6#52, R4#54, H30#52, H27#34","r6":52},{"id":73,"ja":"主鎖","en":"main chain","freq":4,"history":"R6#54, R4#15, H24#12, H23#12","r6":54},{"id":74,"ja":"分率","en":"fraction","freq":4,"history":"R6#62, H30#62, H27#44, H24#27","r6":62},{"id":75,"ja":"密度","en":"density","freq":4,"history":"R6#63, R4#104, H24#86, H23#86","r6":63},{"id":76,"ja":"天然ゴム","en":"natural rubber","freq":4,"history":"R6#73, H30#74, H27#53, H23#81","r6":73},{"id":77,"ja":"エラストマー（弾性体）","en":"elastomer","freq":4,"history":"R6#77, R4#101, H30#25, H23#53","r6":77},{"id":78,"ja":"ゴーシュ","en":"gauche","freq":4,"history":"R6#79, R4#124, H30#80, H27#59","r6":79},{"id":79,"ja":"スキュー","en":"skew","freq":4,"history":"R6#80, R4#125, H30#81, H27#60","r6":80},{"id":80,"ja":"連鎖数","en":"run number","freq":4,"history":"R6#95, H27#67, H24#20, H23#20","r6":95},{"id":81,"ja":"分布","en":"distribution","freq":4,"history":"R6#96, R4#105, H27#71, H24#33","r6":96},{"id":82,"ja":"広がり（鎖の広がり）","en":"dimension / chain dimension","freq":4,"history":"R6#119, R4#57, H27#94, H24#60","r6":119},{"id":83,"ja":"網目状高分子（高分子網目）","en":"network polymer / polymer network","freq":4,"history":"R6#127, R4#100, H24#97, H23#97","r6":127},{"id":84,"ja":"エントロピー","en":"entropy","freq":4,"history":"R4#23, H30#44, H27#31, H24#10","r6":null},{"id":85,"ja":"平衡","en":"equilibrium","freq":4,"history":"R4#114, H30#63, H24#90, H23#90","r6":null},{"id":86,"ja":"タクチシチー","en":"tacticity","freq":4,"history":"H30#17, H27#96, H24#84, H23#84","r6":null},{"id":87,"ja":"ナイロン","en":"nylon","freq":3,"history":"R6#7, H30#7, H27#7","r6":7},{"id":88,"ja":"応力","en":"stress","freq":3,"history":"R6#20, H30#18, H27#18","r6":20},{"id":89,"ja":"ガラス転移温度","en":"glass transition temperature","freq":3,"history":"R6#22, H30#22, H27#16","r6":22},{"id":90,"ja":"架橋","en":"crosslink / crosslinking","freq":3,"history":"R6#24, H24#93, H23#93","r6":24},{"id":91,"ja":"からみあい","en":"entanglement","freq":3,"history":"R6#27, R4#96, H24#99","r6":27},{"id":92,"ja":"数平均分子量","en":"number-average molecular weight","freq":3,"history":"R6#28, R4#13, H30#28","r6":28},{"id":93,"ja":"合成","en":"synthesis","freq":3,"history":"R6#42, R4#1, H30#67","r6":42},{"id":94,"ja":"らせん","en":"helix","freq":3,"history":"R6#60, R4#120, H27#38","r6":60},{"id":95,"ja":"頭 - 頭結合","en":"head-to-head","freq":3,"history":"R6#66, H30#66, H27#48","r6":66},{"id":96,"ja":"尾 - 尾結合","en":"tail-to-tail","freq":3,"history":"R6#67, H30#68, H27#49","r6":67},{"id":97,"ja":"位置エネルギー（ポテンシャルエネルギー）","en":"potential energy","freq":3,"history":"R6#78, H30#79, H27#58","r6":78},{"id":98,"ja":"分岐高分子","en":"branched polymer","freq":3,"history":"R6#105, R4#92, H24#117","r6":105},{"id":99,"ja":"樹状高分子（高度に枝分かれした高分子）","en":"hyperbranched polymer / dendritic polymer","freq":3,"history":"R6#107, R4#95, H24#118","r6":107},{"id":100,"ja":"トリブロック共重合体","en":"triblock copolymer","freq":3,"history":"R6#108, H24#18, H23#18","r6":108},{"id":101,"ja":"くし型高分子","en":"comb-shaped polymer / comb polymer","freq":3,"history":"R6#110, R4#93, H24#119","r6":110},{"id":102,"ja":"固体","en":"solid","freq":3,"history":"R6#121, H27#85, H23#27","r6":121},{"id":103,"ja":"液体","en":"liquid","freq":3,"history":"R6#122, H27#86, H23#26","r6":122},{"id":104,"ja":"気体","en":"gas","freq":3,"history":"R6#123, H27#87, H23#29","r6":123},{"id":105,"ja":"ダングリング鎖（末端）","en":"dangling chain / dangling chain end","freq":3,"history":"R6#126, R4#107, H24#40","r6":126},{"id":106,"ja":"閉環","en":"closed loop","freq":3,"history":"R6#128, R4#108, H24#36","r6":128},{"id":107,"ja":"構造","en":"structure","freq":3,"history":"R4#16, H24#4, H23#4","r6":null},{"id":108,"ja":"ガラス転移","en":"glass transition","freq":3,"history":"R4#19, H24#38, H23#38","r6":null},{"id":109,"ja":"融解","en":"fusion / melting","freq":3,"history":"R4#24, H24#43, H23#43","r6":null},{"id":110,"ja":"ポリアクリル酸メチル","en":"polymethyl acrylate","freq":3,"history":"R4#33, H24#100, H23#100","r6":null},{"id":111,"ja":"五連子","en":"pentad","freq":3,"history":"R4#74, H24#108, H23#108","r6":null},{"id":112,"ja":"六連子","en":"hexad","freq":3,"history":"R4#75, H24#109, H23#109","r6":null},{"id":113,"ja":"星型高分子","en":"star-shaped polymer / star polymer","freq":3,"history":"R4#94, H27#98, H24#120","r6":null},{"id":114,"ja":"ゴム状態","en":"rubbery state","freq":3,"history":"R4#136, H30#24, H27#20","r6":null},{"id":115,"ja":"球","en":"sphere","freq":3,"history":"R4#138, H30#38, H23#10","r6":null},{"id":116,"ja":"シリンダー","en":"cylinder","freq":3,"history":"R4#139, H30#41, H23#61","r6":null},{"id":117,"ja":"ラメラ","en":"lamella / lamellae","freq":3,"history":"R4#140, H30#42, H23#71","r6":null},{"id":118,"ja":"ひずみ","en":"strain","freq":3,"history":"H30#20, H27#15, H24#91","r6":null},{"id":119,"ja":"結晶化","en":"crystallization","freq":3,"history":"H30#36, H27#27, H23#88","r6":null},{"id":120,"ja":"組成","en":"composition","freq":3,"history":"H27#45, H24#80, H23#80","r6":null},{"id":121,"ja":"重合度","en":"degree of polymerization","freq":3,"history":"H27#92, H24#96, H23#96","r6":null},{"id":122,"ja":"依存性","en":"dependence","freq":2,"history":"R6#13, R4#43","r6":13},{"id":123,"ja":"弾性率","en":"elastic modulus / modulus","freq":2,"history":"R6#16, H30#16","r6":16},{"id":124,"ja":"配列","en":"sequence","freq":2,"history":"R6#26, H23#55","r6":26},{"id":125,"ja":"バルク","en":"bulk","freq":2,"history":"R6#32, R4#55","r6":32},{"id":126,"ja":"モノマー","en":"monomer","freq":2,"history":"R6#36, R4#11","r6":36},{"id":127,"ja":"結晶化度","en":"crystallinity","freq":2,"history":"R6#41, R4#99","r6":41},{"id":128,"ja":"実験","en":"experiment","freq":2,"history":"R6#97, R4#26","r6":97},{"id":129,"ja":"反応","en":"reaction","freq":2,"history":"R6#104, R4#3","r6":104},{"id":130,"ja":"官能性 / 官能数","en":"functionality","freq":2,"history":"R6#109, R4#106","r6":109},{"id":131,"ja":"ゲル化","en":"gelation","freq":2,"history":"R6#111, R4#103","r6":111},{"id":132,"ja":"水素結合","en":"hydrogen bond","freq":2,"history":"R6#114, R4#126","r6":114},{"id":133,"ja":"セグメント長","en":"segment length","freq":2,"history":"R6#118, R4#133","r6":118},{"id":134,"ja":"有効な","en":"effective","freq":2,"history":"R6#124, R4#111","r6":124},{"id":135,"ja":"格子","en":"lattice","freq":2,"history":"R6#125, H23#46","r6":125},{"id":136,"ja":"相互侵入（高分子）網目","en":"interpenetrating polymer network","freq":2,"history":"R6#129, R4#116","r6":129},{"id":137,"ja":"定量的","en":"quantitative","freq":2,"history":"R6#130, H24#41","r6":130},{"id":138,"ja":"熱物性","en":"thermal property","freq":2,"history":"R4#18, H23#25","r6":null},{"id":139,"ja":"ポリカーボネート","en":"polycarbonate","freq":2,"history":"R4#38, H27#97","r6":null},{"id":140,"ja":"貧溶媒","en":"poor solvent","freq":2,"history":"R4#50, H27#93","r6":null},{"id":141,"ja":"ブロック共重合体","en":"block copolymer","freq":2,"history":"R4#89, H23#8","r6":null},{"id":142,"ja":"液晶（液晶性の）","en":"liquid crystal / liquid crystalline","freq":2,"history":"R4#97, H24#95","r6":null},{"id":143,"ja":"膨潤","en":"swelling","freq":2,"history":"R4#113, H24#81","r6":null},{"id":144,"ja":"柔軟性（フレキシブル）","en":"flexibility / flexible","freq":2,"history":"R4#132, H24#61","r6":null},{"id":145,"ja":"物性","en":"property","freq":2,"history":"H30#11, H27#11","r6":null},{"id":146,"ja":"形態","en":"morphology","freq":2,"history":"H30#15, H23#9","r6":null},{"id":147,"ja":"高分子溶液","en":"polymer solution","freq":2,"history":"H30#46, H27#32","r6":null},{"id":148,"ja":"熱力学","en":"thermodynamics","freq":2,"history":"H30#53, H23#95","r6":null},{"id":149,"ja":"開環（開環重合）","en":"ring-opening / ring-opening polymerization","freq":2,"history":"H30#96, H24#25","r6":null},{"id":150,"ja":"キラル","en":"chiral","freq":2,"history":"H27#90, H24#67","r6":null},{"id":151,"ja":"測定","en":"measurement","freq":2,"history":"H27#100, H24#88","r6":null},{"id":152,"ja":"絶対温度","en":"absolute temperature","freq":2,"history":"H24#2, H23#2","r6":null},{"id":153,"ja":"共重合体","en":"copolymer","freq":2,"history":"H24#51, H23#51","r6":null},{"id":154,"ja":"半径","en":"radius","freq":2,"history":"H24#75, H23#75","r6":null},{"id":155,"ja":"ポリ乳酸","en":"polylactic acid","freq":1,"history":"R6#11","r6":11},{"id":156,"ja":"引っ張りの","en":"tensile","freq":1,"history":"R6#12","r6":12},{"id":157,"ja":"共役ジエン","en":"conjugated diene","freq":1,"history":"R6#21","r6":21},{"id":158,"ja":"規則正しい","en":"regular","freq":1,"history":"R6#30","r6":30},{"id":159,"ja":"球状の","en":"spherical","freq":1,"history":"R6#38","r6":38},{"id":160,"ja":"光学","en":"optical","freq":1,"history":"R6#82","r6":82},{"id":161,"ja":"熱膨張","en":"thermal expansion","freq":1,"history":"R6#103","r6":103},{"id":162,"ja":"不均一性","en":"inhomogeneity","freq":1,"history":"R6#106","r6":106},{"id":163,"ja":"変換","en":"conversion","freq":1,"history":"R6#112","r6":112},{"id":164,"ja":"相図","en":"phase diagram","freq":1,"history":"R6#113","r6":113},{"id":165,"ja":"球晶","en":"spherulite","freq":1,"history":"R6#116","r6":116},{"id":166,"ja":"シシケバブ","en":"shish-kebab","freq":1,"history":"R6#117","r6":117},{"id":167,"ja":"重縮合","en":"polycondensation","freq":1,"history":"R4#6","r6":null},{"id":168,"ja":"付加重合","en":"polyaddition / addition polymerization","freq":1,"history":"R4#7","r6":null},{"id":169,"ja":"カチオン","en":"cation / cationic","freq":1,"history":"R4#8","r6":null},{"id":170,"ja":"アニオン","en":"anion / anionic","freq":1,"history":"R4#9","r6":null},{"id":171,"ja":"ラジカル","en":"radical","freq":1,"history":"R4#10","r6":null},{"id":172,"ja":"引張弾性率","en":"tensile modulus","freq":1,"history":"R4#42","r6":null},{"id":173,"ja":"架橋高分子","en":"crosslinked polymer","freq":1,"history":"R4#45","r6":null},{"id":174,"ja":"良溶媒","en":"good solvent","freq":1,"history":"R4#49","r6":null},{"id":175,"ja":"非溶媒","en":"non-solvent","freq":1,"history":"R4#51","r6":null},{"id":176,"ja":"固有粘度","en":"intrinsic viscosity","freq":1,"history":"R4#59","r6":null},{"id":177,"ja":"七連子","en":"heptad","freq":1,"history":"R4#76","r6":null},{"id":178,"ja":"八連子","en":"octad","freq":1,"history":"R4#77","r6":null},{"id":179,"ja":"四元共重合体","en":"quaternary copolymer","freq":1,"history":"R4#85","r6":null},{"id":180,"ja":"加硫","en":"vulcanization","freq":1,"history":"R4#102","r6":null},{"id":181,"ja":"浸透圧","en":"osmotic pressure","freq":1,"history":"R4#109","r6":null},{"id":182,"ja":"一軸伸長","en":"uniaxial stretching / uniaxial extension","freq":1,"history":"R4#110","r6":null},{"id":183,"ja":"膨張","en":"expansion","freq":1,"history":"R4#112","r6":null},{"id":184,"ja":"体積分率","en":"volume fraction","freq":1,"history":"R4#115","r6":null},{"id":185,"ja":"同時法","en":"simultaneous method","freq":1,"history":"R4#117","r6":null},{"id":186,"ja":"逐次法","en":"sequential method","freq":1,"history":"R4#118","r6":null},{"id":187,"ja":"活性化エネルギー","en":"activation energy","freq":1,"history":"R4#119","r6":null},{"id":188,"ja":"斜方晶","en":"orthorhombic","freq":1,"history":"R4#127","r6":null},{"id":189,"ja":"三斜晶","en":"triclinic","freq":1,"history":"R4#128","r6":null},{"id":190,"ja":"広角X線回折","en":"wide-angle X-ray diffraction","freq":1,"history":"R4#141","r6":null},{"id":191,"ja":"走査型電子顕微鏡","en":"scanning electron microscope","freq":1,"history":"R4#142","r6":null},{"id":192,"ja":"透過型電子顕微鏡","en":"transmission electron microscope","freq":1,"history":"R4#143","r6":null},{"id":193,"ja":"小角X線散乱","en":"small-angle X-ray scattering","freq":1,"history":"R4#144","r6":null},{"id":194,"ja":"偏光顕微鏡像","en":"polarized optical micrograph","freq":1,"history":"R4#145","r6":null},{"id":195,"ja":"原子間力顕微鏡","en":"atomic force microscope","freq":1,"history":"R4#146","r6":null},{"id":196,"ja":"セグメント","en":"segment","freq":1,"history":"H30#19","r6":null},{"id":197,"ja":"長さ","en":"length","freq":1,"history":"H30#21","r6":null},{"id":198,"ja":"物理的からみあい","en":"physical entanglement","freq":1,"history":"H30#27","r6":null},{"id":199,"ja":"非晶領域","en":"amorphous region","freq":1,"history":"H30#39","r6":null},{"id":200,"ja":"回転","en":"rotation","freq":1,"history":"H30#78","r6":null},{"id":201,"ja":"光学異性体","en":"optical isomer","freq":1,"history":"H30#83","r6":null},{"id":202,"ja":"ループ","en":"loop","freq":1,"history":"H30#102","r6":null},{"id":203,"ja":"高分子合成","en":"polymer synthesis","freq":1,"history":"H27#84","r6":null},{"id":204,"ja":"確率","en":"probability","freq":1,"history":"H27#88","r6":null},{"id":205,"ja":"理想状態","en":"ideal state","freq":1,"history":"H27#89","r6":null},{"id":206,"ja":"対称","en":"symmetry / symmetric","freq":1,"history":"H27#91","r6":null},{"id":207,"ja":"環状高分子","en":"cyclic polymer","freq":1,"history":"H27#99","r6":null},{"id":208,"ja":"ゴム","en":"rubber","freq":1,"history":"H24#1","r6":null},{"id":209,"ja":"帰属","en":"assignment","freq":1,"history":"H24#26","r6":null},{"id":210,"ja":"効果","en":"effect","freq":1,"history":"H24#29","r6":null},{"id":211,"ja":"応力緩和","en":"stress relaxation","freq":1,"history":"H24#32","r6":null},{"id":212,"ja":"定性的","en":"qualitative","freq":1,"history":"H24#42","r6":null},{"id":213,"ja":"斥力的","en":"repulsive","freq":1,"history":"H24#46","r6":null},{"id":214,"ja":"相互作用","en":"interaction","freq":1,"history":"H24#53","r6":null},{"id":215,"ja":"液滴","en":"droplet","freq":1,"history":"H24#54","r6":null},{"id":216,"ja":"光散乱","en":"light scattering","freq":1,"history":"H24#55","r6":null},{"id":217,"ja":"結合長","en":"bond length","freq":1,"history":"H24#70","r6":null},{"id":218,"ja":"体積弾性率","en":"bulk modulus","freq":1,"history":"H24#71","r6":null},{"id":219,"ja":"破壊応力","en":"stress at break / fracture stress","freq":1,"history":"H24#85","r6":null},{"id":220,"ja":"破壊伸度","en":"elongation at break","freq":1,"history":"H24#87","r6":null},{"id":221,"ja":"降伏点","en":"yield point","freq":1,"history":"H24#89","r6":null},{"id":222,"ja":"軸","en":"axis","freq":1,"history":"H24#92","r6":null},{"id":223,"ja":"基礎","en":"fundamental / basis","freq":1,"history":"H24#94","r6":null},{"id":224,"ja":"分子内","en":"intramolecular","freq":1,"history":"H24#110","r6":null},{"id":225,"ja":"分子間","en":"intermolecular","freq":1,"history":"H24#115","r6":null},{"id":226,"ja":"デンドリマー","en":"dendrimer","freq":1,"history":"H24#121","r6":null},{"id":227,"ja":"相転移","en":"phase transition","freq":1,"history":"H23#15","r6":null},{"id":228,"ja":"巨大分子","en":"macromolecule","freq":1,"history":"H23#19","r6":null},{"id":229,"ja":"電気物性","en":"electrical property","freq":1,"history":"H23#32","r6":null},{"id":230,"ja":"磁気物性","en":"magnetic property","freq":1,"history":"H23#33","r6":null},{"id":231,"ja":"光学物性","en":"optical property","freq":1,"history":"H23#36","r6":null},{"id":232,"ja":"溶解","en":"dissolution","freq":1,"history":"H23#41","r6":null},{"id":233,"ja":"転位","en":"dislocation / rearrangement","freq":1,"history":"H23#54","r6":null},{"id":234,"ja":"六方格子","en":"hexagonal lattice","freq":1,"history":"H23#60","r6":null},{"id":235,"ja":"外場","en":"external field","freq":1,"history":"H23#67","r6":null},{"id":236,"ja":"微結晶","en":"crystallite","freq":1,"history":"H23#85","r6":null},{"id":237,"ja":"領域","en":"region","freq":1,"history":"H23#87","r6":null},{"id":238,"ja":"粘性のある","en":"viscous","freq":1,"history":"H23#89","r6":null},{"id":239,"ja":"速度定数","en":"rate constant","freq":1,"history":"H23#91","r6":null},{"id":240,"ja":"速度論","en":"kinetics","freq":1,"history":"H23#92","r6":null},{"id":241,"ja":"動力学","en":"dynamics","freq":1,"history":"H23#94","r6":null},{"id":242,"ja":"自発的","en":"spontaneous","freq":1,"history":"H23#99","r6":null},{"id":243,"ja":"弾性","en":"elasticity","freq":1,"history":"H23#100","r6":null},{"id":244,"ja":"ジャイロイド","en":"gyroid","freq":1,"history":"H23#115","r6":null},{"id":245,"ja":"ドメイン","en":"domain","freq":1,"history":"H23#117","r6":null},{"id":246,"ja":"単純立方（格子）","en":"simple cubic lattice","freq":1,"history":"H23#118","r6":null},{"id":247,"ja":"巨視的","en":"macroscopic","freq":1,"history":"H23#119","r6":null},{"id":248,"ja":"面心立方（格子）","en":"face-centered cubic lattice","freq":1,"history":"H23#120","r6":null},{"id":249,"ja":"体心立方（格子）","en":"body-centered cubic lattice","freq":1,"history":"H23#121","r6":null},{"id":250,"ja":"微視的","en":"microscopic","freq":1,"history":"H23#122","r6":null},{"id":251,"ja":"ニューマン投影式","en":"Newman projection","freq":0,"history":"スライド81-83、R6問11・H27問11記述","r6":null},{"id":252,"ja":"内部回転角","en":"internal rotation angle","freq":0,"history":"スライド82、R6問11・H27問11記述","r6":null},{"id":253,"ja":"単結合","en":"single bond","freq":0,"history":"スライド80、R6問11記述","r6":null},{"id":254,"ja":"自由回転","en":"free rotation","freq":0,"history":"スライド80","r6":null},{"id":255,"ja":"オールトランス配座","en":"all-trans conformation","freq":0,"history":"スライド85-87","r6":null},{"id":256,"ja":"架橋密度","en":"crosslink density","freq":0,"history":"スライド55-56、R6問14記述","r6":null},{"id":257,"ja":"架橋点間分子量","en":"molecular weight between crosslink points","freq":0,"history":"スライド55-56","r6":null},{"id":258,"ja":"永久にときほぐれることのないからみ合い","en":"never disentangled closed loops","freq":0,"history":"スライド55-57","r6":null},{"id":259,"ja":"欠陥（不完全な網目構造）","en":"defect / incomplete polymer network","freq":0,"history":"スライド57 英語のみ表記","r6":null},{"id":260,"ja":"復元力","en":"restoring force","freq":0,"history":"スライド69-70","r6":null},{"id":261,"ja":"エネルギー弾性","en":"energy elasticity","freq":0,"history":"スライド69-70","r6":null},{"id":262,"ja":"エントロピー弾性","en":"entropy elasticity","freq":0,"history":"スライド69-70","r6":null},{"id":263,"ja":"ポリマーブレンド","en":"polymer blend","freq":0,"history":"スライド71-73","r6":null},{"id":264,"ja":"相分離","en":"phase separation","freq":0,"history":"スライド71-72","r6":null},{"id":265,"ja":"非相溶性の","en":"immiscible","freq":0,"history":"スライド71-72","r6":null},{"id":266,"ja":"相溶性の","en":"miscible","freq":0,"history":"スライド73","r6":null},{"id":267,"ja":"入れ子になった（網目）","en":"interwoven","freq":0,"history":"スライド72 英語のみ表記","r6":null},{"id":268,"ja":"架橋剤","en":"crosslinker","freq":0,"history":"スライド73","r6":null},{"id":269,"ja":"物理架橋","en":"physical crosslink","freq":0,"history":"スライド103 英語のみ表記","r6":null},{"id":270,"ja":"熱可塑性エラストマー","en":"thermoplastic elastomer","freq":0,"history":"スライド103-105","r6":null},{"id":271,"ja":"セグメント化ポリウレタン","en":"segmented polyurethane","freq":0,"history":"スライド103 英語のみ表記","r6":null},{"id":272,"ja":"ゴム状マトリックス（母相）","en":"rubbery matrix / matrix","freq":0,"history":"スライド103 英語のみ表記","r6":null},{"id":273,"ja":"凝集力（分散力）","en":"cohesive force / dispersion force","freq":0,"history":"スライド103 英語のみ表記","r6":null},{"id":274,"ja":"ブリッジ配座（ブリッジ型）","en":"bridge conformation","freq":0,"history":"スライド104-105","r6":null},{"id":275,"ja":"ループ配座（ループ型）","en":"loop conformation","freq":0,"history":"スライド104-105","r6":null},{"id":276,"ja":"コロナ鎖（不連続なコロナ鎖）","en":"corona chain / discontinuous corona chain","freq":0,"history":"スライド104-105","r6":null},{"id":277,"ja":"ラメラ厚","en":"lamellar thickness","freq":0,"history":"スライド121-122","r6":null},{"id":278,"ja":"長周期","en":"long period","freq":0,"history":"スライド121-122","r6":null},{"id":279,"ja":"配向","en":"orientation","freq":0,"history":"スライド121-122","r6":null},{"id":280,"ja":"強磁場（超高磁場）","en":"ultrahigh magnetic field / magnetic field","freq":0,"history":"スライド121-122","r6":null},{"id":281,"ja":"ギブス・トムソン式","en":"Gibbs-Thomson equation","freq":0,"history":"スライド121-122","r6":null},{"id":282,"ja":"ゴム状流動","en":"rubbery flow","freq":0,"history":"スライド10 英語のみ表記","r6":null},{"id":283,"ja":"液状流動","en":"liquid flow","freq":0,"history":"スライド10 英語のみ表記","r6":null},{"id":284,"ja":"リビング重合","en":"living polymerization","freq":0,"history":"スライド1","r6":null},{"id":285,"ja":"平均連鎖長","en":"average run length","freq":0,"history":"スライド・H30問16・H27問13","r6":null},{"id":286,"ja":"複屈折","en":"birefringence","freq":0,"history":"スライド","r6":null}];
+
+    const STORAGE_KEY = 'polymer_structure_vocab_v1';
+
+    // Application State
+    let state = {
+      mode: 'spell',       // 'spell' | 'card' | 'list'
+      filter: 'all',       // 'all' | 'freq_6_5' | 'freq_4_3' | 'freq_2_1' | 'slide' | 'mistakes'
+      sort: 'freq',        // 'freq' | 'r6' | 'random'
+      showExcluded: false,
+      redSheet: false,
+      searchQuery: '',
+      currentIndex: 0,
+      hintStage: 0,        // 0: hidden, 1: initials & length, 2: partial letters
+      answered: false,
+      cardFlipped: false,
+      autoSpeakCard: false,
+      streak: 0,
+      totalAttempts: 0,
+      correctAttempts: 0,
+      customWords: [],
+      excludedIds: {},     // { [id]: true }
+      mistakeIds: {},      // { [id]: true }
+      randomOrderMap: {}   // { [id]: randomFloat }
+    };
+
+    // Load persisted state from localStorage safely
+    function loadStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.customWords)) state.customWords = parsed.customWords;
+          if (parsed.excludedIds && typeof parsed.excludedIds === 'object') state.excludedIds = parsed.excludedIds;
+          if (parsed.mistakeIds && typeof parsed.mistakeIds === 'object') state.mistakeIds = parsed.mistakeIds;
+          if (typeof parsed.streak === 'number') state.streak = parsed.streak;
+          if (typeof parsed.totalAttempts === 'number') state.totalAttempts = parsed.totalAttempts;
+          if (typeof parsed.correctAttempts === 'number') state.correctAttempts = parsed.correctAttempts;
+        }
+      } catch (e) {
+        // Ignore storage error in restricted environments
+      }
+    }
+
+    function saveStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          customWords: state.customWords,
+          excludedIds: state.excludedIds,
+          mistakeIds: state.mistakeIds,
+          streak: state.streak,
+          totalAttempts: state.totalAttempts,
+          correctAttempts: state.correctAttempts
+        }));
+      } catch (e) {
+        // Ignore storage error
+      }
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      const text = document.getElementById('toastMessage');
+      text.textContent = msg;
+      box.classList.remove('opacity-0', 'translate-y-2');
+      box.classList.add('opacity-100', 'translate-y-0');
+      if (window._toastTimer) clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        box.classList.add('opacity-0', 'translate-y-2');
+        box.classList.remove('opacity-100', 'translate-y-0');
+      }, 2400);
+    }
+
+    function getAllWords() {
+      return INITIAL_WORDS.concat(state.customWords);
+    }
+
+    function generateRandomWeights() {
+      const all = getAllWords();
+      const map = {};
+      all.forEach(w => {
+        map[w.id] = Math.random();
+      });
+      state.randomOrderMap = map;
+    }
+
+    // Parse answers separated by '/'
+    function getAnswerVariants(enStr) {
+      return enStr.split('/').map(s => s.trim()).filter(Boolean);
+    }
+
+    // Normalize string for comparison (trim, collapse spaces, lowercase)
+    function normalizeAnswer(str) {
+      return str.trim().replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    // Frequency Badge Metadata
+    function getFreqMeta(freq) {
+      switch (freq) {
+        case 6: return { label: '🔥 6回すべて出題', short: '🔥6回', cls: 'bg-rose-100 text-rose-800 border border-rose-300' };
+        case 5: return { label: '⭐ 5回出題', short: '⭐5回', cls: 'bg-amber-100 text-amber-900 border border-amber-300' };
+        case 4: return { label: '📌 4回出題', short: '📌4回', cls: 'bg-indigo-100 text-indigo-800 border border-indigo-300' };
+        case 3: return { label: '🔹 3回出題', short: '🔹3回', cls: 'bg-sky-100 text-sky-800 border border-sky-300' };
+        case 2: return { label: '🔸 2回出題', short: '🔸2回', cls: 'bg-emerald-100 text-emerald-800 border border-emerald-300' };
+        case 1: return { label: '▫️ 1回出題', short: '▫️1回', cls: 'bg-slate-100 text-slate-700 border border-slate-300' };
+        default: return { label: '📘 スライド英語枠', short: '📘スライド枠', cls: 'bg-purple-100 text-purple-800 border border-purple-300' };
+      }
+    }
+
+    // Render history badges (e.g., R6#1, R4#27...)
+    function createHistoryBadgesHTML(historyStr) {
+      const parts = historyStr.split(/[、,]/).map(s => s.trim()).filter(Boolean);
+      return parts.map(p => {
+        const isR6 = p.startsWith('R6');
+        const cls = isR6
+          ? 'bg-indigo-600 text-white font-bold border-indigo-600'
+          : 'bg-slate-100 text-slate-600 font-medium border-slate-200';
+        return `<span class="text-[11px] font-mono-code px-2 py-0.5 rounded border ${cls}">${escapeHtml(p)}</span>`;
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Filtered & Sorted Word List
+    function getFilteredWords() {
+      const all = getAllWords();
+      const q = state.searchQuery.trim().toLowerCase();
+
+      let filtered = all.filter(w => {
+        // Excluded check (in list mode, if searching or showExcluded is checked, show it)
+        if (!state.showExcluded && state.excludedIds[w.id]) {
+          return false;
+        }
+        // Category filter
+        if (state.filter === 'freq_6_5' && !(w.freq === 6 || w.freq === 5)) return false;
+        if (state.filter === 'freq_4_3' && !(w.freq === 4 || w.freq === 3)) return false;
+        if (state.filter === 'freq_2_1' && !(w.freq === 2 || w.freq === 1)) return false;
+        if (state.filter === 'slide' && w.freq !== 0) return false;
+        if (state.filter === 'mistakes' && !state.mistakeIds[w.id]) return false;
+
+        // Search query (applies in List mode)
+        if (state.mode === 'list' && q) {
+          const hay = `${w.id} ${w.ja} ${w.en} ${w.history}`.toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      // Sorting
+      filtered.sort((a, b) => {
+        if (state.sort === 'freq') {
+          // 6 -> 5 -> 4 -> 3 -> 2 -> 1 -> 0 (slide)
+          if (b.freq !== a.freq) return b.freq - a.freq;
+          return a.id - b.id;
+        } else if (state.sort === 'r6') {
+          const aHas = a.r6 !== null && a.r6 !== undefined;
+          const bHas = b.r6 !== null && b.r6 !== undefined;
+          if (aHas && bHas) return a.r6 - b.r6;
+          if (aHas && !bHas) return -1;
+          if (!aHas && bHas) return 1;
+          // Secondary sort: R6 descriptive questions in history
+          const aR6Desc = a.history.includes('R6') ? 0 : 1;
+          const bR6Desc = b.history.includes('R6') ? 0 : 1;
+          if (aR6Desc !== bR6Desc) return aR6Desc - bR6Desc;
+          if (b.freq !== a.freq) return b.freq - a.freq;
+          return a.id - b.id;
+        } else if (state.sort === 'random') {
+          const wa = state.randomOrderMap[a.id] ?? 0;
+          const wb = state.randomOrderMap[b.id] ?? 0;
+          return wa - wb;
+        }
+        return a.id - b.id;
+      });
+
+      return filtered;
+    }
+
+    // Build Hint String for a single variant
+    function buildHintPattern(variant, stage) {
+      // Count total letters excluding spaces
+      const nonSpaceLen = variant.replace(/\s+/g, '').length;
+      const words = variant.split(' ');
+      const maskedWords = words.map(word => {
+        // Handle hyphenated subwords cleanly
+        return word.split('-').map(sub => {
+          if (!sub) return '';
+          const chars = sub.split('');
+          if (stage === 1) {
+            // Show only first character
+            return chars.map((ch, idx) => idx === 0 ? ch : '_').join(' ');
+          } else {
+            // Stage 2: Show first 2 chars and last char (if length >= 4), plus every 3rd char
+            return chars.map((ch, idx) => {
+              if (idx === 0 || idx === 1 || (chars.length >= 4 && idx === chars.length - 1) || idx % 3 === 0) {
+                return ch;
+              }
+              return '_';
+            }).join(' ');
+          }
+        }).join(' - ');
+      });
+      const wordLengths = words.map(w => w.length).join('+');
+      const lenDesc = words.length > 1 ? `${nonSpaceLen}文字 (${wordLengths})` : `${nonSpaceLen}文字`;
+      return `${maskedWords.join('   ')}  [${lenDesc}]`;
+    }
+
+    // Character-by-character alignment (Needleman-Wunsch / Levenshtein trace)
+    function computeCharDiff(userStr, targetStr) {
+      const u = userStr.trim().replace(/\s+/g, ' ');
+      const t = targetStr.trim().replace(/\s+/g, ' ');
+      const m = u.length;
+      const n = t.length;
+
+      const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+      for (let i = 0; i <= m; i++) dp[i][0] = i;
+      for (let j = 0; j <= n; j++) dp[0][j] = j;
+
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          const same = u[i - 1].toLowerCase() === t[j - 1].toLowerCase();
+          if (same) {
+            dp[i][j] = dp[i - 1][j - 1];
+          } else {
+            dp[i][j] = 1 + Math.min(
+              dp[i - 1][j - 1], // substitution
+              dp[i - 1][j],     // deletion (extra in user)
+              dp[i][j - 1]      // insertion (missing in user)
+            );
+          }
+        }
+      }
+
+      // Backtrack
+      let i = m, j = n;
+      const ops = [];
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && u[i - 1].toLowerCase() === t[j - 1].toLowerCase()) {
+          ops.push({ type: 'match', uChar: u[i - 1], tChar: t[j - 1] });
+          i--; j--;
+        } else if (i > 0 && j > 0 && dp[i][j] === dp[i - 1][j - 1] + 1) {
+          ops.push({ type: 'sub', uChar: u[i - 1], tChar: t[j - 1] });
+          i--; j--;
+        } else if (j > 0 && (i === 0 || dp[i][j] === dp[i][j - 1] + 1)) {
+          ops.push({ type: 'missing', uChar: '＿', tChar: t[j - 1] });
+          j--;
+        } else {
+          ops.push({ type: 'extra', uChar: u[i - 1], tChar: '' });
+          i--;
+        }
+      }
+      ops.reverse();
+      return { distance: dp[m][n], ops, target: t };
+    }
+
+    // Find closest answer variant to user input
+    function findBestDiff(userStr, variants) {
+      let best = null;
+      variants.forEach(v => {
+        const res = computeCharDiff(userStr, v);
+        if (!best || res.distance < best.distance) {
+          best = res;
+        }
+      });
+      return best;
+    }
+
+    // Speech Synthesis (en-US)
+    function speakEnglish(text) {
+      if (!('speechSynthesis' in window)) {
+        showToast('お使いのブラウザは音声読み上げに対応していません');
+        return;
+      }
+      try {
+        window.speechSynthesis.cancel();
+        // Speak primary or separated cleanly
+        const variants = getAnswerVariants(text);
+        const utterText = variants.join(' , or , ');
+        const utter = new SpeechSynthesisUtterance(utterText);
+        utter.lang = 'en-US';
+        utter.rate = 0.92;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        showToast('音声再生に失敗しました');
+      }
+    }
+
+    // Update Header Counts & Filter Counts
+    function updateCountsAndStats() {
+      const all = getAllWords();
+      const activeWords = all.filter(w => state.showExcluded || !state.excludedIds[w.id]);
+
+      const cAll = activeWords.length;
+      const c65 = activeWords.filter(w => w.freq === 6 || w.freq === 5).length;
+      const c43 = activeWords.filter(w => w.freq === 4 || w.freq === 3).length;
+      const c21 = activeWords.filter(w => w.freq === 2 || w.freq === 1).length;
+      const cSlide = activeWords.filter(w => w.freq === 0).length;
+      const cMistakes = activeWords.filter(w => state.mistakeIds[w.id]).length;
+      const excludedTotal = Object.keys(state.excludedIds).filter(k => state.excludedIds[k]).length;
+      const mistakeTotal = Object.keys(state.mistakeIds).filter(k => state.mistakeIds[k]).length;
+
+      document.getElementById('countAll').textContent = `(${cAll})`;
+      document.getElementById('count65').textContent = `(${c65})`;
+      document.getElementById('count43').textContent = `(${c43})`;
+      document.getElementById('count21').textContent = `(${c21})`;
+      document.getElementById('countSlide').textContent = `(${cSlide})`;
+      document.getElementById('countMistakes').textContent = `(${cMistakes})`;
+      document.getElementById('excludedCountLabel').textContent = excludedTotal;
+      document.getElementById('mobileStatBadge').textContent = `残${all.length - excludedTotal} / 全${all.length}語`;
+
+      document.getElementById('streakCount').textContent = state.streak;
+      const acc = state.totalAttempts > 0
+        ? Math.round((state.correctAttempts / state.totalAttempts) * 100) + '%'
+        : '--%';
+      document.getElementById('accuracyRate').textContent = acc;
+
+      // Update list mode counters
+      document.getElementById('listTotalCount').textContent = all.length;
+      document.getElementById('listExcludedCount').textContent = excludedTotal;
+      document.getElementById('listMistakeCount').textContent = mistakeTotal;
+
+      // Highlight active filter button
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        const f = btn.getAttribute('data-filter');
+        if (f === state.filter) {
+          btn.className = 'filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-900 text-white shadow-sm';
+        } else if (f === 'mistakes') {
+          btn.className = 'filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200';
+        } else {
+          btn.className = 'filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200';
+        }
+      });
+
+      // Reshuffle button visibility
+      const reshuffleBtn = document.getElementById('reshuffleBtn');
+      if (state.sort === 'random') {
+        reshuffleBtn.classList.remove('hidden');
+      } else {
+        reshuffleBtn.classList.add('hidden');
+      }
+    }
+
+    // Main Render Dispatcher
+    function renderApp() {
+      updateCountsAndStats();
+      const list = getFilteredWords();
+
+      // Mode Tabs Styling
+      const tabs = [
+        { id: 'tabBtnSpell', mode: 'spell', view: 'viewSpell' },
+        { id: 'tabBtnCard', mode: 'card', view: 'viewCard' },
+        { id: 'tabBtnList', mode: 'list', view: 'viewList' }
+      ];
+      tabs.forEach(t => {
+        const btn = document.getElementById(t.id);
+        const view = document.getElementById(t.view);
+        if (state.mode === t.mode) {
+          btn.className = 'flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 bg-indigo-600 text-white shadow';
+          view.classList.remove('hidden');
+        } else {
+          btn.className = 'flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 text-slate-300 hover:text-white';
+          view.classList.add('hidden');
+        }
+      });
+
+      const emptyBox = document.getElementById('emptyStateBox');
+      if (list.length === 0 && state.mode !== 'list') {
+        emptyBox.classList.remove('hidden');
+        document.getElementById('viewSpell').classList.add('hidden');
+        document.getElementById('viewCard').classList.add('hidden');
+        return;
+      } else {
+        emptyBox.classList.add('hidden');
+      }
+
+      if (state.currentIndex >= list.length) {
+        state.currentIndex = Math.max(0, list.length - 1);
+      }
+
+      if (state.mode === 'spell') {
+        renderSpellMode(list);
+      } else if (state.mode === 'card') {
+        renderCardMode(list);
+      } else if (state.mode === 'list') {
+        renderListMode(list);
+      }
+    }
+
+    // ====================================================
+    // Render Mode 1: スペル特訓モード
+    // ====================================================
+    function renderSpellMode(list) {
+      const word = list[state.currentIndex];
+      if (!word) return;
+
+      const total = list.length;
+      const idx = state.currentIndex;
+      document.getElementById('spellProgressText').textContent = `${idx + 1} / ${total} 問`;
+      const pct = Math.max(2, Math.round(((idx + 1) / total) * 100));
+      document.getElementById('spellProgressBar').style.width = `${pct}%`;
+
+      document.getElementById('prevWordBtn').disabled = idx === 0;
+      document.getElementById('nextWordBtn').disabled = idx === total - 1;
+
+      // Badges
+      document.getElementById('spellWordIdBadge').textContent = `No.${word.id}`;
+      const freqMeta = getFreqMeta(word.freq);
+      const freqEl = document.getElementById('spellFreqBadge');
+      freqEl.textContent = freqMeta.label;
+      freqEl.className = `text-xs font-extrabold px-2.5 py-1 rounded-full ${freqMeta.cls}`;
+
+      const variants = getAnswerVariants(word.en);
+      const multiBadge = document.getElementById('spellMultiAnswerBadge');
+      if (variants.length > 1) {
+        multiBadge.classList.remove('hidden');
+        multiBadge.textContent = `別解あり（${variants.length}通りどれでも正解）`;
+      } else {
+        multiBadge.classList.add('hidden');
+      }
+
+      document.getElementById('spellHistoryContainer').innerHTML = createHistoryBadgesHTML(word.history);
+      document.getElementById('spellJaPrompt').textContent = word.ja;
+
+      // Mistake & Exclude toggle button states
+      const isMistake = !!state.mistakeIds[word.id];
+      const mistakeBtn = document.getElementById('toggleMistakeCurrentBtn');
+      document.getElementById('mistakeCurrentIcon').textContent = isMistake ? '❌' : '☆';
+      mistakeBtn.className = isMistake
+        ? 'px-2.5 py-1.5 rounded-lg text-xs font-bold border transition flex items-center gap-1 bg-rose-50 text-rose-700 border-rose-300'
+        : 'px-2.5 py-1.5 rounded-lg text-xs font-bold border transition flex items-center gap-1 bg-slate-50 text-slate-600 border-slate-200 hover:bg-rose-50';
+
+      const isExcluded = !!state.excludedIds[word.id];
+      const excludeBtn = document.getElementById('toggleExcludeCurrentBtn');
+      document.getElementById('excludeCurrentText').textContent = isExcluded ? '除外済み（クリックで戻す）' : '覚えた（除外）';
+      excludeBtn.className = isExcluded
+        ? 'px-2.5 py-1.5 rounded-lg text-xs font-bold border transition flex items-center gap-1 bg-emerald-100 text-emerald-800 border-emerald-300'
+        : 'px-2.5 py-1.5 rounded-lg text-xs font-bold border transition flex items-center gap-1 bg-slate-50 text-slate-600 border-slate-200 hover:bg-emerald-50';
+
+      // Hint display
+      updateHintUI(word);
+
+      // Reset input & feedback if not answered
+      if (!state.answered) {
+        document.getElementById('spellFeedbackBox').classList.add('hidden');
+        const input = document.getElementById('spellInput');
+        input.value = '';
+        input.disabled = false;
+        document.getElementById('submitSpellBtn').textContent = '判定 ↵';
+        setTimeout(() => input.focus(), 20);
+      }
+    }
+
+    function updateHintUI(word) {
+      const hintBox = document.getElementById('hintDisplayBox');
+      const hintLabel = document.getElementById('hintBtnLabel');
+      const hintTitle = document.getElementById('hintStageTitle');
+      const hintContent = document.getElementById('hintTextContent');
+      const variants = getAnswerVariants(word.en);
+
+      if (state.hintStage === 0) {
+        hintBox.classList.add('hidden');
+        hintLabel.textContent = '頭文字と文字数を見る (ヒント1)';
+      } else if (state.hintStage === 1) {
+        hintBox.classList.remove('hidden');
+        hintTitle.textContent = '💡 ヒント Lv.1（頭文字と文字数）';
+        hintContent.innerHTML = variants.map(v => escapeHtml(buildHintPattern(v, 1))).join('<br/>');
+        hintLabel.textContent = 'さらに文字を開く (ヒント2)';
+      } else {
+        hintBox.classList.remove('hidden');
+        hintTitle.textContent = '💡 ヒント Lv.2（頭文字2文字＋末尾＋一部文字）';
+        hintContent.innerHTML = variants.map(v => escapeHtml(buildHintPattern(v, 2))).join('<br/>');
+        hintLabel.textContent = 'ヒントを隠す';
+      }
+    }
+
+    // Evaluate Spelling Input
+    function evaluateSpelling(isGiveUp = false) {
+      const list = getFilteredWords();
+      const word = list[state.currentIndex];
+      if (!word) return;
+
+      const inputEl = document.getElementById('spellInput');
+      const rawUser = isGiveUp ? '' : inputEl.value;
+      const normUser = normalizeAnswer(rawUser);
+      const variants = getAnswerVariants(word.en);
+
+      const isCorrect = !isGiveUp && variants.some(v => normalizeAnswer(v) === normUser);
+
+      state.answered = true;
+      state.totalAttempts += 1;
+
+      const feedbackBox = document.getElementById('spellFeedbackBox');
+      const feedbackIcon = document.getElementById('feedbackIcon');
+      const feedbackTitle = document.getElementById('feedbackTitle');
+      const feedbackSubtitle = document.getElementById('feedbackSubtitle');
+      const diffSection = document.getElementById('diffComparisonSection');
+      const answersList = document.getElementById('feedbackAnswersList');
+      const charCountInfo = document.getElementById('feedbackCharCountInfo');
+
+      feedbackBox.classList.remove('hidden');
+      document.getElementById('submitSpellBtn').textContent = '次へ ↵';
+
+      // Render all valid answer variants with speaker buttons
+      answersList.innerHTML = variants.map((v, idx) => {
+        const badgeLabel = variants.length > 1 ? (idx === 0 ? '解答1' : `別解${idx + 1}`) : '正解';
+        return `
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-300">
+            <span class="text-[11px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-white">${badgeLabel}</span>
+            <span class="font-mono-code text-base sm:text-lg font-extrabold text-slate-900">${escapeHtml(v)}</span>
+            <button type="button" data-speak="${escapeHtml(v)}" class="variant-speak-btn text-xs px-1.5 py-0.5 rounded bg-white hover:bg-indigo-50 text-indigo-600 border border-slate-200 font-bold" title="この発音を聞く">
+              🔊
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      answersList.querySelectorAll('.variant-speak-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          speakEnglish(btn.getAttribute('data-speak'));
+        });
+      });
+
+      charCountInfo.textContent = variants.map(v => `${v}: ${v.replace(/\s+/g, '').length}文字`).join(' / ');
+
+      if (isCorrect) {
+        state.correctAttempts += 1;
+        state.streak += 1;
+        feedbackBox.className = 'rounded-2xl border-2 border-emerald-400 bg-emerald-50/70 p-4 sm:p-5 space-y-4 transition-all';
+        feedbackIcon.textContent = '⭕';
+        feedbackTitle.textContent = '正解！減点なしの完璧なスペルです';
+        feedbackTitle.className = 'text-base sm:text-lg font-extrabold text-emerald-900';
+        feedbackSubtitle.textContent = variants.length > 1
+          ? '複数ある正解表記のうち、どちらを書いても満点です！別解もあわせて確認しておきましょう。'
+          : `連続正解 ${state.streak}問達成！このままEnterキーで次の問題へ進めます。`;
+        feedbackSubtitle.className = 'text-xs font-semibold text-emerald-800';
+        diffSection.classList.add('hidden');
+      } else {
+        state.streak = 0;
+        // Register in mistakeIds automatically
+        state.mistakeIds[word.id] = true;
+
+        feedbackBox.className = 'rounded-2xl border-2 border-rose-400 bg-rose-50/70 p-4 sm:p-5 space-y-4 transition-all';
+        feedbackIcon.textContent = '❌';
+        feedbackTitle.textContent = isGiveUp ? '解答を確認しましょう（苦手リストに登録しました）' : 'スペルミスあり！（苦手リストに自動登録しました）';
+        feedbackTitle.className = 'text-base sm:text-lg font-extrabold text-rose-900';
+
+        const bestDiff = findBestDiff(rawUser, variants);
+        const errCount = bestDiff ? bestDiff.distance : variants[0].length;
+        feedbackSubtitle.textContent = isGiveUp
+          ? '下の練習欄で正しいスペルを1回タイピングしてから次へ進むと定着率が大幅に上がります。'
+          : `正解スペルと ${errCount} 箇所異なります（試験基準：-${errCount}点減点相当）。どの文字が違ったか確認しましょう！`;
+        feedbackSubtitle.className = 'text-xs font-semibold text-rose-800';
+
+        // Render Character-level Diff
+        diffSection.classList.remove('hidden');
+        document.getElementById('deductionBadge').textContent = isGiveUp
+          ? '未入力（答え合わせ）'
+          : `ミス ${errCount} 箇所（-${errCount}点減点相当）`;
+        document.getElementById('diffTargetLabel').textContent = bestDiff.target;
+
+        const userRow = document.getElementById('diffUserRow');
+        const targetRow = document.getElementById('diffTargetRow');
+
+        if (!rawUser.trim()) {
+          userRow.innerHTML = '<span class="text-xs text-slate-400 italic">（未入力）</span>';
+        } else {
+          userRow.innerHTML = bestDiff.ops.map(op => {
+            if (op.type === 'match') {
+              return `<span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold">${escapeHtml(op.uChar === ' ' ? '␣' : op.uChar)}</span>`;
+            } else if (op.type === 'sub') {
+              return `<span class="px-1.5 py-0.5 rounded bg-rose-200 text-rose-900 border border-rose-500 font-extrabold" title="文字違い">${escapeHtml(op.uChar === ' ' ? '␣' : op.uChar)}</span>`;
+            } else if (op.type === 'extra') {
+              return `<span class="px-1.5 py-0.5 rounded bg-rose-200 text-rose-900 border border-rose-500 line-through font-extrabold" title="余分な文字">${escapeHtml(op.uChar === ' ' ? '␣' : op.uChar)}</span>`;
+            } else {
+              // missing character in user input
+              return `<span class="px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 border border-amber-500 font-extrabold" title="文字抜け">＿</span>`;
+            }
+          }).join('');
+        }
+
+        targetRow.innerHTML = bestDiff.ops.filter(op => op.type !== 'extra').map(op => {
+          if (op.type === 'match') {
+            return `<span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold">${escapeHtml(op.tChar === ' ' ? '␣' : op.tChar)}</span>`;
+          } else if (op.type === 'sub') {
+            return `<span class="px-1.5 py-0.5 rounded bg-rose-600 text-white border border-rose-700 font-extrabold">${escapeHtml(op.tChar === ' ' ? '␣' : op.tChar)}</span>`;
+          } else {
+            // missing in user
+            return `<span class="px-1.5 py-0.5 rounded bg-amber-500 text-white border border-amber-600 font-extrabold">${escapeHtml(op.tChar === ' ' ? '␣' : op.tChar)}</span>`;
+          }
+        }).join('');
+
+        // Reset retry practice box
+        const retryInput = document.getElementById('retryPracticeInput');
+        const retryStatus = document.getElementById('retryMatchStatus');
+        retryInput.value = '';
+        retryStatus.textContent = '未一致';
+        retryStatus.className = 'text-xs font-bold text-slate-400 shrink-0';
+      }
+
+      saveStorage();
+      updateCountsAndStats();
+    }
+
+    function goToNextWord() {
+      const list = getFilteredWords();
+      if (list.length === 0) return;
+      state.answered = false;
+      state.hintStage = 0;
+      state.cardFlipped = false;
+      if (state.currentIndex < list.length - 1) {
+        state.currentIndex += 1;
+      } else {
+        state.currentIndex = 0;
+        showToast('最後の問題まで到達したため、先頭に戻りました！');
+      }
+      renderApp();
+    }
+
+    function goToPrevWord() {
+      const list = getFilteredWords();
+      if (list.length === 0) return;
+      state.answered = false;
+      state.hintStage = 0;
+      state.cardFlipped = false;
+      if (state.currentIndex > 0) {
+        state.currentIndex -= 1;
+      }
+      renderApp();
+    }
+
+    // ====================================================
+    // Render Mode 2: カード暗記モード
+    // ====================================================
+    function renderCardMode(list) {
+      const word = list[state.currentIndex];
+      if (!word) return;
+
+      document.getElementById('cardProgressText').textContent = `${state.currentIndex + 1} / ${list.length} 枚`;
+      document.getElementById('cardWordIdBadge').textContent = `No.${word.id}`;
+
+      const freqMeta = getFreqMeta(word.freq);
+      const freqBadge = document.getElementById('cardFreqBadge');
+      freqBadge.textContent = freqMeta.label;
+      freqBadge.className = `text-xs font-extrabold px-2.5 py-1 rounded-full ${freqMeta.cls}`;
+
+      document.getElementById('cardHistoryContainer').innerHTML = createHistoryBadgesHTML(word.history);
+      document.getElementById('cardJaText').textContent = word.ja;
+
+      const variants = getAnswerVariants(word.en);
+      document.getElementById('cardHintPreview').textContent = `頭文字ヒント: ${variants.map(v => v[0] + '... (' + v.replace(/\s+/g, '').length + '文字)').join(' / ')}`;
+
+      // Back side
+      document.getElementById('cardBackJaSmall').textContent = `No.${word.id} ${word.ja}`;
+      document.getElementById('cardBackCharInfo').textContent = `${variants[0].replace(/\s+/g, '').length}文字`;
+      document.getElementById('cardEnMain').textContent = variants[0];
+      const subList = document.getElementById('cardEnSubList');
+      if (variants.length > 1) {
+        subList.innerHTML = variants.slice(1).map(v => `<div>別解: <span class="font-bold underline">${escapeHtml(v)}</span></div>`).join('');
+      } else {
+        subList.innerHTML = '';
+      }
+
+      const cardEl = document.getElementById('flashcardContainer');
+      if (state.cardFlipped) {
+        cardEl.classList.add('card-flipped');
+      } else {
+        cardEl.classList.remove('card-flipped');
+      }
+    }
+
+    // ====================================================
+    // Render Mode 3: 単語一覧・管理モード
+    // ====================================================
+    function renderListMode(list) {
+      document.getElementById('listShowingCount').textContent = list.length;
+      const container = document.getElementById('wordListContainer');
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl border border-slate-200 p-8 text-center text-slate-500 text-sm">
+            一致する単語が見つかりません。検索キーワードや絞り込み条件を変更してください。
+          </div>
+        `;
+        return;
+      }
+
+      const rowsHtml = list.map((w, idx) => {
+        const freqMeta = getFreqMeta(w.freq);
+        const isExcluded = !!state.excludedIds[w.id];
+        const isMistake = !!state.mistakeIds[w.id];
+        const variants = getAnswerVariants(w.en);
+
+        const enDisplayHtml = state.redSheet
+          ? `<button type="button" data-reveal-id="${w.id}" class="reveal-en-btn px-3 py-1 rounded-lg bg-rose-600 text-white text-xs font-bold shadow-sm hover:bg-rose-700 transition">🟥 タップで英語を表示</button>
+             <span id="maskedEn_${w.id}" class="hidden font-mono-code text-sm sm:text-base font-extrabold text-indigo-950 break-all">${escapeHtml(w.en)}</span>`
+          : `<span class="font-mono-code text-sm sm:text-base font-extrabold text-indigo-950 break-all">${escapeHtml(w.en)}</span>`;
+
+        return `
+          <div class="bg-white rounded-xl border ${isExcluded ? 'border-slate-200 opacity-60 bg-slate-50' : isMistake ? 'border-rose-300 bg-rose-50/20' : 'border-slate-200'} p-3 sm:p-4 shadow-sm hover:border-indigo-300 transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-1.5 flex-1">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-[11px] font-mono-code font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">No.${w.id}</span>
+                <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-full ${freqMeta.cls}">${freqMeta.short}</span>
+                ${variants.length > 1 ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">別解あり</span>` : ''}
+                ${isExcluded ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">✓ 除外済み</span>` : ''}
+                <div class="flex flex-wrap gap-1 ml-1">${createHistoryBadgesHTML(w.history)}</div>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 pt-0.5">
+                <span class="text-sm sm:text-base font-bold text-slate-900">${escapeHtml(w.ja)}</span>
+                <span class="hidden sm:inline text-slate-300">→</span>
+                <div class="flex items-center gap-2 flex-wrap">
+                  ${enDisplayHtml}
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 self-end sm:self-center shrink-0">
+              <button type="button" data-action="speak" data-id="${w.id}" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-700 text-xs font-bold transition" title="発音を聞く">
+                🔊
+              </button>
+              <button type="button" data-action="practice" data-index="${idx}" class="px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold transition" title="この問題からスペル特訓">
+                ⌨️ 特訓
+              </button>
+              <button type="button" data-action="mistake" data-id="${w.id}" class="px-2.5 py-1.5 rounded-lg border text-xs font-bold transition ${isMistake ? 'bg-rose-100 text-rose-700 border-rose-300' : 'bg-white text-slate-500 border-slate-200 hover:bg-rose-50'}" title="苦手マーク切替">
+                ${isMistake ? '❌苦手' : '☆苦手'}
+              </button>
+              <button type="button" data-action="exclude" data-id="${w.id}" class="px-2.5 py-1.5 rounded-lg border text-xs font-bold transition ${isExcluded ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-600 border-slate-300 hover:bg-slate-100'}">
+                ${isExcluded ? '↩️ 復元' : '✓ 除外'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = rowsHtml;
+    }
+
+    // ====================================================
+    // Event Listeners & Initialization
+    // ====================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      loadStorage();
+      generateRandomWeights();
+      renderApp();
+
+      // Mode Tabs
+      document.getElementById('tabBtnSpell').addEventListener('click', () => {
+        state.mode = 'spell';
+        state.answered = false;
+        renderApp();
+      });
+      document.getElementById('tabBtnCard').addEventListener('click', () => {
+        state.mode = 'card';
+        state.cardFlipped = false;
+        renderApp();
+      });
+      document.getElementById('tabBtnList').addEventListener('click', () => {
+        state.mode = 'list';
+        renderApp();
+      });
+
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.filter = btn.getAttribute('data-filter');
+          state.currentIndex = 0;
+          state.answered = false;
+          state.hintStage = 0;
+          state.cardFlipped = false;
+          renderApp();
+        });
+      });
+
+      // Sort Select
+      document.getElementById('sortSelect').addEventListener('change', (e) => {
+        state.sort = e.target.value;
+        if (state.sort === 'random') {
+          generateRandomWeights();
+        }
+        state.currentIndex = 0;
+        state.answered = false;
+        state.hintStage = 0;
+        state.cardFlipped = false;
+        renderApp();
+      });
+
+      document.getElementById('reshuffleBtn').addEventListener('click', () => {
+        generateRandomWeights();
+        state.currentIndex = 0;
+        state.answered = false;
+        state.hintStage = 0;
+        state.cardFlipped = false;
+        showToast('🔀 出題順を再シャッフルしました');
+        renderApp();
+      });
+
+      // Show Excluded Checkbox
+      document.getElementById('showExcludedCheckbox').addEventListener('change', (e) => {
+        state.showExcluded = e.target.checked;
+        state.currentIndex = 0;
+        state.answered = false;
+        renderApp();
+      });
+
+      // Empty state buttons
+      document.getElementById('resetFilterBtn').addEventListener('click', () => {
+        state.filter = 'all';
+        state.currentIndex = 0;
+        state.answered = false;
+        renderApp();
+      });
+      document.getElementById('includeExcludedQuickBtn').addEventListener('click', () => {
+        state.showExcluded = true;
+        document.getElementById('showExcludedCheckbox').checked = true;
+        state.currentIndex = 0;
+        state.answered = false;
+        renderApp();
+      });
+
+      // Spell Mode Navigation & Actions
+      document.getElementById('prevWordBtn').addEventListener('click', goToPrevWord);
+      document.getElementById('nextWordBtn').addEventListener('click', goToNextWord);
+
+      document.getElementById('toggleMistakeCurrentBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (!word) return;
+        if (state.mistakeIds[word.id]) {
+          delete state.mistakeIds[word.id];
+          showToast('苦手リストから解除しました');
+        } else {
+          state.mistakeIds[word.id] = true;
+          showToast('❌ 苦手リストに登録しました');
+        }
+        saveStorage();
+        renderApp();
+      });
+
+      document.getElementById('toggleExcludeCurrentBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (!word) return;
+        if (state.excludedIds[word.id]) {
+          delete state.excludedIds[word.id];
+          showToast('単語を出題対象に戻しました');
+        } else {
+          state.excludedIds[word.id] = true;
+          showToast(`「${word.ja}」を覚えた単語として除外しました`);
+        }
+        saveStorage();
+        state.answered = false;
+        state.hintStage = 0;
+        renderApp();
+      });
+
+      document.getElementById('hintBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (!word) return;
+        state.hintStage = (state.hintStage + 1) % 3;
+        updateHintUI(word);
+        document.getElementById('spellInput').focus();
+      });
+
+      document.getElementById('speakCurrentBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (word) speakEnglish(word.en);
+      });
+
+      // Spell Form Submit (Enter key handler)
+      document.getElementById('spellForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!state.answered) {
+          evaluateSpelling(false);
+        } else {
+          goToNextWord();
+        }
+      });
+
+      document.getElementById('giveUpBtn').addEventListener('click', () => {
+        if (!state.answered) {
+          evaluateSpelling(true);
+        }
+      });
+
+      document.getElementById('feedbackSpeakBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (word) speakEnglish(word.en);
+      });
+
+      document.getElementById('feedbackNextBtn').addEventListener('click', () => {
+        goToNextWord();
+      });
+
+      // Immediate Retry Input on Mistake
+      const retryInput = document.getElementById('retryPracticeInput');
+      retryInput.addEventListener('input', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (!word) return;
+        const variants = getAnswerVariants(word.en);
+        const matched = variants.some(v => normalizeAnswer(v) === normalizeAnswer(retryInput.value));
+        const statusEl = document.getElementById('retryMatchStatus');
+        if (matched) {
+          statusEl.textContent = '⭕ 一致！Enterで次へ';
+          statusEl.className = 'text-xs font-extrabold text-emerald-600 shrink-0';
+        } else {
+          statusEl.textContent = '入力中...';
+          statusEl.className = 'text-xs font-bold text-amber-600 shrink-0';
+        }
+      });
+
+      retryInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const list = getFilteredWords();
+          const word = list[state.currentIndex];
+          if (!word) return;
+          const variants = getAnswerVariants(word.en);
+          if (variants.some(v => normalizeAnswer(v) === normalizeAnswer(retryInput.value))) {
+            goToNextWord();
+          }
+        }
+      });
+
+      // Flashcard Mode Listeners
+      document.getElementById('cardPrevBtn').addEventListener('click', goToPrevWord);
+      document.getElementById('cardNextBtn').addEventListener('click', goToNextWord);
+      document.getElementById('autoSpeakCardCheckbox').addEventListener('change', (e) => {
+        state.autoSpeakCard = e.target.checked;
+      });
+      document.getElementById('cardSpeakBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (word) speakEnglish(word.en);
+      });
+
+      const flashcardContainer = document.getElementById('flashcardContainer');
+      function toggleCardFlip() {
+        state.cardFlipped = !state.cardFlipped;
+        const list = getFilteredWords();
+        renderCardMode(list);
+        if (state.cardFlipped && state.autoSpeakCard && list[state.currentIndex]) {
+          speakEnglish(list[state.currentIndex].en);
+        }
+      }
+      flashcardContainer.addEventListener('click', toggleCardFlip);
+      flashcardContainer.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          toggleCardFlip();
+        }
+      });
+
+      document.getElementById('cardMarkMistakeBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (!word) return;
+        state.mistakeIds[word.id] = true;
+        saveStorage();
+        showToast('❌ 苦手リストに登録しました');
+        goToNextWord();
+      });
+
+      document.getElementById('cardMarkOkBtn').addEventListener('click', () => {
+        goToNextWord();
+      });
+
+      document.getElementById('cardExcludeBtn').addEventListener('click', () => {
+        const list = getFilteredWords();
+        const word = list[state.currentIndex];
+        if (!word) return;
+        state.excludedIds[word.id] = true;
+        saveStorage();
+        showToast(`「${word.ja}」を除外しました`);
+        state.cardFlipped = false;
+        renderApp();
+      });
+
+      // List Mode Controls
+      const searchInput = document.getElementById('listSearchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      searchInput.addEventListener('input', () => {
+        state.searchQuery = searchInput.value;
+        if (state.searchQuery) {
+          clearSearchBtn.classList.remove('hidden');
+        } else {
+          clearSearchBtn.classList.add('hidden');
+        }
+        renderApp();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        state.searchQuery = '';
+        searchInput.value = '';
+        clearSearchBtn.classList.add('hidden');
+        renderApp();
+      });
+
+      document.getElementById('toggleRedSheetBtn').addEventListener('click', () => {
+        state.redSheet = !state.redSheet;
+        document.getElementById('redSheetBtnText').textContent = `英語を隠す（赤シート）: ${state.redSheet ? 'ON' : 'OFF'}`;
+        renderApp();
+      });
+
+      document.getElementById('restoreAllExcludedBtn').addEventListener('click', () => {
+        state.excludedIds = {};
+        saveStorage();
+        showToast('除外済みの単語をすべて復元しました');
+        renderApp();
+      });
+
+      // Event delegation for Word List Container
+      document.getElementById('wordListContainer').addEventListener('click', (e) => {
+        const revealBtn = e.target.closest('.reveal-en-btn');
+        if (revealBtn) {
+          const id = revealBtn.getAttribute('data-reveal-id');
+          revealBtn.classList.add('hidden');
+          const span = document.getElementById(`maskedEn_${id}`);
+          if (span) span.classList.remove('hidden');
+          return;
+        }
+
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const action = btn.getAttribute('data-action');
+        const id = Number(btn.getAttribute('data-id'));
+        const all = getAllWords();
+        const word = all.find(w => w.id === id);
+
+        if (action === 'speak' && word) {
+          speakEnglish(word.en);
+        } else if (action === 'practice') {
+          const idx = Number(btn.getAttribute('data-index'));
+          state.mode = 'spell';
+          state.currentIndex = idx;
+          state.answered = false;
+          state.hintStage = 0;
+          renderApp();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (action === 'mistake' && word) {
+          if (state.mistakeIds[id]) {
+            delete state.mistakeIds[id];
+          } else {
+            state.mistakeIds[id] = true;
+          }
+          saveStorage();
+          renderApp();
+        } else if (action === 'exclude' && word) {
+          if (state.excludedIds[id]) {
+            delete state.excludedIds[id];
+            showToast(`「${word.ja}」を復元しました`);
+          } else {
+            state.excludedIds[id] = true;
+            showToast(`「${word.ja}」を除外しました`);
+          }
+          saveStorage();
+          renderApp();
+        }
+      });
+
+      // Add Word Modal
+      const addModal = document.getElementById('addWordModal');
+      document.getElementById('openAddModalBtn').addEventListener('click', () => {
+        addModal.classList.remove('hidden');
+        document.getElementById('newWordJa').focus();
+      });
+      const closeAdd = () => addModal.classList.add('hidden');
+      document.getElementById('closeAddModalBtn').addEventListener('click', closeAdd);
+      document.getElementById('cancelAddModalBtn').addEventListener('click', closeAdd);
+
+      document.getElementById('addWordForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const ja = document.getElementById('newWordJa').value.trim();
+        const en = document.getElementById('newWordEn').value.trim();
+        const freq = Number(document.getElementById('newWordFreq').value);
+        const history = document.getElementById('newWordHistory').value.trim() || '追加単語';
+        if (!ja || !en) return;
+
+        const all = getAllWords();
+        const nextId = all.reduce((max, w) => Math.max(max, w.id), 286) + 1;
+        const newEntry = {
+          id: nextId,
+          ja,
+          en,
+          freq,
+          history,
+          r6: null
+        };
+        state.customWords.push(newEntry);
+        state.randomOrderMap[nextId] = Math.random();
+        saveStorage();
+        document.getElementById('addWordForm').reset();
+        closeAdd();
+        showToast(`No.${nextId}「${ja}」を追加しました！`);
+        renderApp();
+      });
+
+      // Reset Modal
+      const resetModal = document.getElementById('resetModal');
+      document.getElementById('openResetModalBtn').addEventListener('click', () => {
+        resetModal.classList.remove('hidden');
+      });
+      const closeReset = () => resetModal.classList.add('hidden');
+      document.getElementById('closeResetModalBtn').addEventListener('click', closeReset);
+      document.getElementById('cancelResetModalBtn').addEventListener('click', closeReset);
+
+      document.getElementById('resetExcludedOnlyBtn').addEventListener('click', () => {
+        state.excludedIds = {};
+        saveStorage();
+        closeReset();
+        showToast('除外済みの単語をすべて元に戻しました');
+        renderApp();
+      });
+
+      document.getElementById('resetMistakesOnlyBtn').addEventListener('click', () => {
+        state.mistakeIds = {};
+        saveStorage();
+        closeReset();
+        if (state.filter === 'mistakes') state.filter = 'all';
+        showToast('苦手リストをクリアしました');
+        renderApp();
+      });
+
+      document.getElementById('resetAllStorageBtn').addEventListener('click', () => {
+        state.customWords = [];
+        state.excludedIds = {};
+        state.mistakeIds = {};
+        state.streak = 0;
+        state.totalAttempts = 0;
+        state.correctAttempts = 0;
+        state.filter = 'all';
+        state.currentIndex = 0;
+        state.answered = false;
+        saveStorage();
+        closeReset();
+        showToast('すべてのデータを初期状態（全286語）にリセットしました');
+        renderApp();
+      });
+    });
+  </script>
+</body>
+</html>
